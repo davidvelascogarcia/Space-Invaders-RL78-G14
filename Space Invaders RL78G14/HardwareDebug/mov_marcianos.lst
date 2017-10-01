@@ -1,0 +1,484 @@
+   1                             	r8	=	0xffef0
+   2                             	r16	=	0xffee8
+   3                             	r24	=	0xffee0
+   4                             	r9	=	0xffef1
+   5                             	r17	=	0xffee9
+   6                             	r25	=	0xffee1
+   7                             	r10	=	0xffef2
+   8                             	r18	=	0xffeea
+   9                             	r26	=	0xffee2
+  10                             	r11	=	0xffef3
+  11                             	r19	=	0xffeeb
+  12                             	r27	=	0xffee3
+  13                             	r12	=	0xffef4
+  14                             	r20	=	0xffeec
+  15                             	r28	=	0xffee4
+  16                             	r13	=	0xffef5
+  17                             	r21	=	0xffeed
+  18                             	r29	=	0xffee5
+  19                             	r14	=	0xffef6
+  20                             	r22	=	0xffeee
+  21                             	r30	=	0xffee6
+  22                             	r15	=	0xffef7
+  23                             	r23	=	0xffeef
+  24                             	r31	=	0xffee7
+  25                             	.text
+  26                             	.Ltext0:
+  27                             		.comm	_mov_marcianos,7,1
+  28                             		.global	_centro
+  29                             	.data
+  32                             	_centro:
+  33 0000 0E                      		.byte	14
+  34                             		.global	_derecha
+  37                             	_derecha:
+  38 0001 1C                      		.byte	28
+  39                             		.global	_izquierda
+  42                             	_izquierda:
+  43 0002 07                      		.byte	7
+  44                             		.global	_filaactual
+  45                             	.bss
+  48                             	_filaactual:
+  49 0000 00                      		.zero	1
+  50                             		.global	_centro2
+  51                             	.data
+  54                             	_centro2:
+  55 0003 0E                      		.byte	14
+  56                             		.global	_derecha2
+  59                             	_derecha2:
+  60 0004 1C                      		.byte	28
+  61                             		.global	_izquierda2
+  64                             	_izquierda2:
+  65 0005 07                      		.byte	7
+  66                             	.text
+  67                             		.global	_mover_marcianos
+  69                             	_mover_marcianos:
+  70                             	.LFB0:
+  71                             		.file 1 "../src/mov_marcianos.c"
+   1:../src/mov_marcianos.c **** /*
+   2:../src/mov_marcianos.c ****  * mov_marcianos.c
+   3:../src/mov_marcianos.c ****  *
+   4:../src/mov_marcianos.c ****  *  Created on: 30/4/2017
+   5:../src/mov_marcianos.c ****  *      Author: Ivan
+   6:../src/mov_marcianos.c ****  */
+   7:../src/mov_marcianos.c **** #include "mov_marcianos.h"
+   8:../src/mov_marcianos.c **** #include "r_cg_macrodriver.h"
+   9:../src/mov_marcianos.c **** #include "r_cg_cgc.h"
+  10:../src/mov_marcianos.c **** #include "r_cg_port.h"
+  11:../src/mov_marcianos.c **** #include "r_cg_intc.h"
+  12:../src/mov_marcianos.c **** #include "r_cg_timer.h"
+  13:../src/mov_marcianos.c **** 
+  14:../src/mov_marcianos.c **** 
+  15:../src/mov_marcianos.c **** extern unsigned char mover;
+  16:../src/mov_marcianos.c **** extern unsigned char copia_canon;
+  17:../src/mov_marcianos.c **** extern unsigned char up;
+  18:../src/mov_marcianos.c **** unsigned char centro = 14;
+  19:../src/mov_marcianos.c **** unsigned char derecha=28;
+  20:../src/mov_marcianos.c **** unsigned char izquierda=7;
+  21:../src/mov_marcianos.c **** unsigned char filaactual=0;
+  22:../src/mov_marcianos.c **** unsigned char centro2=14;
+  23:../src/mov_marcianos.c **** unsigned char derecha2=28;
+  24:../src/mov_marcianos.c **** unsigned char izquierda2=7;
+  25:../src/mov_marcianos.c **** 
+  26:../src/mov_marcianos.c **** void mover_marcianos(void){
+  72                             		.loc 1 26 0
+  27:../src/mov_marcianos.c **** 
+  28:../src/mov_marcianos.c **** 	if(mover<=13){
+  73                             		.loc 1 28 0
+  74 0000 8F 00 00                		mov	a, !_mover
+  75 0003 9D F0                   		mov	r8, a
+  76 0005 4A F0 0D                		cmp	r8, #13
+  77 0008 61 F3                   		 sknh
+  78 000a EC 27 02 00             		 br	!!.L2
+  29:../src/mov_marcianos.c **** 		switch(mover){
+  79                             		.loc 1 29 0
+  80 000e 8F 00 00                		mov	a, !_mover
+  81 0011 9D F0                   		mov	r8, a
+  82 0013 CD F1 00                		mov	r9, #0
+  83 0016 AD F0                   		movw	ax, r8
+  84 0018 44 06 00                		cmpw	ax, #6
+  85 001b 61 F8                   		 sknz
+  86 001d EC 64 01 00             		 br	!!.L4
+  87 0021 AD F0                   		movw	ax, r8
+  88 0023 44 06 00                		cmpw	ax, #6
+  89 0026 71 FF                   		 xor1	CY, a.7
+  90 0028 61 F3                   		 sknh
+  91 002a EC 7C 00 00             		 br	!!.L5
+  92 002e AD F0                   		movw	ax, r8
+  93 0030 44 02 00                		cmpw	ax, #2
+  94 0033 61 F8                   		 sknz
+  95 0035 EC 04 01 00             		 br	!!.L6
+  96 0039 AD F0                   		movw	ax, r8
+  97 003b 44 02 00                		cmpw	ax, #2
+  98 003e 71 FF                   		 xor1	CY, a.7
+  99 0040 61 F3                   		 sknh
+ 100 0042 EC 60 00 00             		 br	!!.L7
+ 101 0046 AD F0                   		movw	ax, r8
+ 102 0048 44 00 00                		cmpw	ax, #0
+ 103 004b 61 F8                   		 sknz
+ 104 004d EC D7 00 00             		 br	!!.L8
+ 105 0051 AD F0                   		movw	ax, r8
+ 106 0053 44 01 00                		cmpw	ax, #1
+ 107 0056 61 F8                   		 sknz
+ 108 0058 EC F0 00 00             		 br	!!.L9
+ 109 005c EC 5E 02 00             		br	!!.L1
+ 110                             	.L7:
+ 111 0060 AD F0                   		movw	ax, r8
+ 112 0062 44 04 00                		cmpw	ax, #4
+ 113 0065 61 F8                   		 sknz
+ 114 0067 EC 34 01 00             		 br	!!.L10
+ 115 006b AD F0                   		movw	ax, r8
+ 116 006d 44 04 00                		cmpw	ax, #4
+ 117 0070 71 FF                   		 xor1	CY, a.7
+ 118 0072 61 F3                   		 sknh
+ 119 0074 EC 48 01 00             		 br	!!.L11
+ 120 0078 EC 20 01 00             		br	!!.L22
+ 121                             	.L5:
+ 122 007c AD F0                   		movw	ax, r8
+ 123 007e 44 0A 00                		cmpw	ax, #10
+ 124 0081 61 F8                   		 sknz
+ 125 0083 EC C6 01 00             		 br	!!.L13
+ 126 0087 AD F0                   		movw	ax, r8
+ 127 0089 44 0A 00                		cmpw	ax, #10
+ 128 008c 71 FF                   		 xor1	CY, a.7
+ 129 008e 61 F3                   		 sknh
+ 130 0090 EC B0 00 00             		 br	!!.L14
+ 131 0094 AD F0                   		movw	ax, r8
+ 132 0096 44 08 00                		cmpw	ax, #8
+ 133 0099 61 F8                   		 sknz
+ 134 009b EC 8C 01 00             		 br	!!.L15
+ 135 009f AD F0                   		movw	ax, r8
+ 136 00a1 44 08 00                		cmpw	ax, #8
+ 137 00a4 71 FF                   		 xor1	CY, a.7
+ 138 00a6 61 F3                   		 sknh
+ 139 00a8 EC AD 01 00             		 br	!!.L16
+ 140 00ac EC 78 01 00             		br	!!.L23
+ 141                             	.L14:
+ 142 00b0 AD F0                   		movw	ax, r8
+ 143 00b2 44 0C 00                		cmpw	ax, #12
+ 144 00b5 61 F8                   		 sknz
+ 145 00b7 EC FE 01 00             		 br	!!.L18
+ 146 00bb AD F0                   		movw	ax, r8
+ 147 00bd 44 0C 00                		cmpw	ax, #12
+ 148 00c0 71 FF                   		 xor1	CY, a.7
+ 149 00c2 61 D8                   		 sknc
+ 150 00c4 EC DF 01 00             		 br	!!.L19
+ 151 00c8 AD F0                   		movw	ax, r8
+ 152 00ca 44 0D 00                		cmpw	ax, #13
+ 153 00cd 61 F8                   		 sknz
+ 154 00cf EC 12 02 00             		 br	!!.L20
+ 155 00d3 EC 5E 02 00             		br	!!.L1
+ 156                             	.L8:
+  30:../src/mov_marcianos.c **** 		case 0:
+  31:../src/mov_marcianos.c **** 			mov_marcianos[6]=centro2;
+ 157                             		.loc 1 31 0
+ 158 00d7 8F 00 00                		mov	a, !_centro2
+ 159 00da 9D F0                   		mov	r8, a
+ 160 00dc 9F 00 00                		mov	!_mov_marcianos+6, a
+  32:../src/mov_marcianos.c **** 			mov_marcianos[5]=centro;
+ 161                             		.loc 1 32 0
+ 162 00df 8F 00 00                		mov	a, !_centro
+ 163 00e2 9D F0                   		mov	r8, a
+ 164 00e4 9F 00 00                		mov	!_mov_marcianos+5, a
+  33:../src/mov_marcianos.c **** 			filaactual=6;
+ 165                             		.loc 1 33 0
+ 166 00e7 51 06                   		mov	a, #6
+ 167 00e9 9F 00 00                		mov	!_filaactual, a
+  34:../src/mov_marcianos.c **** 			break;
+ 168                             		.loc 1 34 0
+ 169 00ec EC 23 02 00             		br	!!.L3
+ 170                             	.L9:
+  35:../src/mov_marcianos.c **** 		case 1:
+  36:../src/mov_marcianos.c **** 			mov_marcianos[6]=derecha2;
+ 171                             		.loc 1 36 0
+ 172 00f0 8F 00 00                		mov	a, !_derecha2
+ 173 00f3 9D F0                   		mov	r8, a
+ 174 00f5 9F 00 00                		mov	!_mov_marcianos+6, a
+  37:../src/mov_marcianos.c **** 			mov_marcianos[5]=derecha;
+ 175                             		.loc 1 37 0
+ 176 00f8 8F 00 00                		mov	a, !_derecha
+ 177 00fb 9D F0                   		mov	r8, a
+ 178 00fd 9F 00 00                		mov	!_mov_marcianos+5, a
+  38:../src/mov_marcianos.c **** 			break;
+ 179                             		.loc 1 38 0
+ 180 0100 EC 23 02 00             		br	!!.L3
+ 181                             	.L6:
+  39:../src/mov_marcianos.c **** 		case 2:
+  40:../src/mov_marcianos.c **** 			mov_marcianos[6]=0;
+ 182                             		.loc 1 40 0
+ 183 0104 F5 00 00                		clrb	!_mov_marcianos+6
+  41:../src/mov_marcianos.c **** 			mov_marcianos[5]=derecha2;
+ 184                             		.loc 1 41 0
+ 185 0107 8F 00 00                		mov	a, !_derecha2
+ 186 010a 9D F0                   		mov	r8, a
+ 187 010c 9F 00 00                		mov	!_mov_marcianos+5, a
+  42:../src/mov_marcianos.c **** 			mov_marcianos[4]=derecha;
+ 188                             		.loc 1 42 0
+ 189 010f 8F 00 00                		mov	a, !_derecha
+ 190 0112 9D F0                   		mov	r8, a
+ 191 0114 9F 00 00                		mov	!_mov_marcianos+4, a
+  43:../src/mov_marcianos.c **** 			filaactual=5;
+ 192                             		.loc 1 43 0
+ 193 0117 51 05                   		mov	a, #5
+ 194 0119 9F 00 00                		mov	!_filaactual, a
+  44:../src/mov_marcianos.c **** 
+  45:../src/mov_marcianos.c **** 			break;
+ 195                             		.loc 1 45 0
+ 196 011c EC 23 02 00             		br	!!.L3
+ 197                             	.L22:
+  46:../src/mov_marcianos.c **** 		case 3:
+  47:../src/mov_marcianos.c **** 			mov_marcianos[5]=centro2;
+ 198                             		.loc 1 47 0
+ 199 0120 8F 00 00                		mov	a, !_centro2
+ 200 0123 9D F0                   		mov	r8, a
+ 201 0125 9F 00 00                		mov	!_mov_marcianos+5, a
+  48:../src/mov_marcianos.c **** 			mov_marcianos[4]=centro;
+ 202                             		.loc 1 48 0
+ 203 0128 8F 00 00                		mov	a, !_centro
+ 204 012b 9D F0                   		mov	r8, a
+ 205 012d 9F 00 00                		mov	!_mov_marcianos+4, a
+  49:../src/mov_marcianos.c **** 			break;
+ 206                             		.loc 1 49 0
+ 207 0130 EC 23 02 00             		br	!!.L3
+ 208                             	.L10:
+  50:../src/mov_marcianos.c **** 		case 4:
+  51:../src/mov_marcianos.c **** 			mov_marcianos[5]=izquierda2;
+ 209                             		.loc 1 51 0
+ 210 0134 8F 00 00                		mov	a, !_izquierda2
+ 211 0137 9D F0                   		mov	r8, a
+ 212 0139 9F 00 00                		mov	!_mov_marcianos+5, a
+  52:../src/mov_marcianos.c **** 			mov_marcianos[4]=izquierda;
+ 213                             		.loc 1 52 0
+ 214 013c 8F 00 00                		mov	a, !_izquierda
+ 215 013f 9D F0                   		mov	r8, a
+ 216 0141 9F 00 00                		mov	!_mov_marcianos+4, a
+  53:../src/mov_marcianos.c **** 			break;
+ 217                             		.loc 1 53 0
+ 218 0144 EC 23 02 00             		br	!!.L3
+ 219                             	.L11:
+  54:../src/mov_marcianos.c **** 		case 5:
+  55:../src/mov_marcianos.c **** 			mov_marcianos[5]=0;
+ 220                             		.loc 1 55 0
+ 221 0148 F5 00 00                		clrb	!_mov_marcianos+5
+  56:../src/mov_marcianos.c **** 			mov_marcianos[4]=izquierda2;
+ 222                             		.loc 1 56 0
+ 223 014b 8F 00 00                		mov	a, !_izquierda2
+ 224 014e 9D F0                   		mov	r8, a
+ 225 0150 9F 00 00                		mov	!_mov_marcianos+4, a
+  57:../src/mov_marcianos.c **** 			mov_marcianos[3]=izquierda;
+ 226                             		.loc 1 57 0
+ 227 0153 8F 00 00                		mov	a, !_izquierda
+ 228 0156 9D F0                   		mov	r8, a
+ 229 0158 9F 00 00                		mov	!_mov_marcianos+3, a
+  58:../src/mov_marcianos.c **** 			filaactual=4;
+ 230                             		.loc 1 58 0
+ 231 015b 51 04                   		mov	a, #4
+ 232 015d 9F 00 00                		mov	!_filaactual, a
+  59:../src/mov_marcianos.c **** 			break;
+ 233                             		.loc 1 59 0
+ 234 0160 EC 23 02 00             		br	!!.L3
+ 235                             	.L4:
+  60:../src/mov_marcianos.c **** 		case 6:
+  61:../src/mov_marcianos.c **** 			mov_marcianos[4]=centro2;
+ 236                             		.loc 1 61 0
+ 237 0164 8F 00 00                		mov	a, !_centro2
+ 238 0167 9D F0                   		mov	r8, a
+ 239 0169 9F 00 00                		mov	!_mov_marcianos+4, a
+  62:../src/mov_marcianos.c **** 			mov_marcianos[3]=centro;
+ 240                             		.loc 1 62 0
+ 241 016c 8F 00 00                		mov	a, !_centro
+ 242 016f 9D F0                   		mov	r8, a
+ 243 0171 9F 00 00                		mov	!_mov_marcianos+3, a
+  63:../src/mov_marcianos.c **** 			break;
+ 244                             		.loc 1 63 0
+ 245 0174 EC 23 02 00             		br	!!.L3
+ 246                             	.L23:
+  64:../src/mov_marcianos.c **** 		case 7:
+  65:../src/mov_marcianos.c **** 			mov_marcianos[4]=derecha2;
+ 247                             		.loc 1 65 0
+ 248 0178 8F 00 00                		mov	a, !_derecha2
+ 249 017b 9D F0                   		mov	r8, a
+ 250 017d 9F 00 00                		mov	!_mov_marcianos+4, a
+  66:../src/mov_marcianos.c **** 			mov_marcianos[3]=derecha;
+ 251                             		.loc 1 66 0
+ 252 0180 8F 00 00                		mov	a, !_derecha
+ 253 0183 9D F0                   		mov	r8, a
+ 254 0185 9F 00 00                		mov	!_mov_marcianos+3, a
+  67:../src/mov_marcianos.c **** 			break;
+ 255                             		.loc 1 67 0
+ 256 0188 EC 23 02 00             		br	!!.L3
+ 257                             	.L15:
+  68:../src/mov_marcianos.c **** 		case 8:
+  69:../src/mov_marcianos.c **** 			mov_marcianos[4]=0;
+ 258                             		.loc 1 69 0
+ 259 018c F5 00 00                		clrb	!_mov_marcianos+4
+  70:../src/mov_marcianos.c **** 			mov_marcianos[3]=derecha2;
+ 260                             		.loc 1 70 0
+ 261 018f 8F 00 00                		mov	a, !_derecha2
+ 262 0192 9D F0                   		mov	r8, a
+ 263 0194 9F 00 00                		mov	!_mov_marcianos+3, a
+  71:../src/mov_marcianos.c **** 			mov_marcianos[2]=derecha;
+ 264                             		.loc 1 71 0
+ 265 0197 8F 00 00                		mov	a, !_derecha
+ 266 019a 9D F0                   		mov	r8, a
+ 267 019c 9F 00 00                		mov	!_mov_marcianos+2, a
+  72:../src/mov_marcianos.c **** 			mov_marcianos[6]=7;
+ 268                             		.loc 1 72 0
+ 269 019f 51 07                   		mov	a, #7
+ 270 01a1 9F 00 00                		mov	!_mov_marcianos+6, a
+  73:../src/mov_marcianos.c **** 			filaactual=3;
+ 271                             		.loc 1 73 0
+ 272 01a4 51 03                   		mov	a, #3
+ 273 01a6 9F 00 00                		mov	!_filaactual, a
+  74:../src/mov_marcianos.c **** 			break;
+ 274                             		.loc 1 74 0
+ 275 01a9 EC 23 02 00             		br	!!.L3
+ 276                             	.L16:
+  75:../src/mov_marcianos.c **** 		case 9:
+  76:../src/mov_marcianos.c **** 			mov_marcianos[3]=centro2;
+ 277                             		.loc 1 76 0
+ 278 01ad 8F 00 00                		mov	a, !_centro2
+ 279 01b0 9D F0                   		mov	r8, a
+ 280 01b2 9F 00 00                		mov	!_mov_marcianos+3, a
+  77:../src/mov_marcianos.c **** 			mov_marcianos[2]=centro;
+ 281                             		.loc 1 77 0
+ 282 01b5 8F 00 00                		mov	a, !_centro
+ 283 01b8 9D F0                   		mov	r8, a
+ 284 01ba 9F 00 00                		mov	!_mov_marcianos+2, a
+  78:../src/mov_marcianos.c **** 			mov_marcianos[6]=14;
+ 285                             		.loc 1 78 0
+ 286 01bd 51 0E                   		mov	a, #14
+ 287 01bf 9F 00 00                		mov	!_mov_marcianos+6, a
+  79:../src/mov_marcianos.c **** 			break;
+ 288                             		.loc 1 79 0
+ 289 01c2 EC 23 02 00             		br	!!.L3
+ 290                             	.L13:
+  80:../src/mov_marcianos.c **** 		case 10:
+  81:../src/mov_marcianos.c **** 			mov_marcianos[3]=izquierda2;
+ 291                             		.loc 1 81 0
+ 292 01c6 8F 00 00                		mov	a, !_izquierda2
+ 293 01c9 9D F0                   		mov	r8, a
+ 294 01cb 9F 00 00                		mov	!_mov_marcianos+3, a
+  82:../src/mov_marcianos.c **** 			mov_marcianos[2]=izquierda;
+ 295                             		.loc 1 82 0
+ 296 01ce 8F 00 00                		mov	a, !_izquierda
+ 297 01d1 9D F0                   		mov	r8, a
+ 298 01d3 9F 00 00                		mov	!_mov_marcianos+2, a
+  83:../src/mov_marcianos.c **** 			mov_marcianos[6]=28;
+ 299                             		.loc 1 83 0
+ 300 01d6 51 1C                   		mov	a, #28
+ 301 01d8 9F 00 00                		mov	!_mov_marcianos+6, a
+  84:../src/mov_marcianos.c **** 			break;
+ 302                             		.loc 1 84 0
+ 303 01db EC 23 02 00             		br	!!.L3
+ 304                             	.L19:
+  85:../src/mov_marcianos.c **** 		case 11:
+  86:../src/mov_marcianos.c **** 			mov_marcianos[3]=0;
+ 305                             		.loc 1 86 0
+ 306 01df F5 00 00                		clrb	!_mov_marcianos+3
+  87:../src/mov_marcianos.c **** 			mov_marcianos[2]=izquierda2;
+ 307                             		.loc 1 87 0
+ 308 01e2 8F 00 00                		mov	a, !_izquierda2
+ 309 01e5 9D F0                   		mov	r8, a
+ 310 01e7 9F 00 00                		mov	!_mov_marcianos+2, a
+  88:../src/mov_marcianos.c **** 			mov_marcianos[1]=izquierda;
+ 311                             		.loc 1 88 0
+ 312 01ea 8F 00 00                		mov	a, !_izquierda
+ 313 01ed 9D F0                   		mov	r8, a
+ 314 01ef 9F 00 00                		mov	!_mov_marcianos+1, a
+  89:../src/mov_marcianos.c **** 			mov_marcianos[6]=0;
+ 315                             		.loc 1 89 0
+ 316 01f2 F5 00 00                		clrb	!_mov_marcianos+6
+  90:../src/mov_marcianos.c **** 			filaactual=2;
+ 317                             		.loc 1 90 0
+ 318 01f5 51 02                   		mov	a, #2
+ 319 01f7 9F 00 00                		mov	!_filaactual, a
+  91:../src/mov_marcianos.c **** 			break;
+ 320                             		.loc 1 91 0
+ 321 01fa EC 23 02 00             		br	!!.L3
+ 322                             	.L18:
+  92:../src/mov_marcianos.c **** 		case 12:
+  93:../src/mov_marcianos.c **** 			mov_marcianos[2]=centro2;
+ 323                             		.loc 1 93 0
+ 324 01fe 8F 00 00                		mov	a, !_centro2
+ 325 0201 9D F0                   		mov	r8, a
+ 326 0203 9F 00 00                		mov	!_mov_marcianos+2, a
+  94:../src/mov_marcianos.c **** 			mov_marcianos[1]=centro;
+ 327                             		.loc 1 94 0
+ 328 0206 8F 00 00                		mov	a, !_centro
+ 329 0209 9D F0                   		mov	r8, a
+ 330 020b 9F 00 00                		mov	!_mov_marcianos+1, a
+  95:../src/mov_marcianos.c **** 			break;
+ 331                             		.loc 1 95 0
+ 332 020e EC 23 02 00             		br	!!.L3
+ 333                             	.L20:
+  96:../src/mov_marcianos.c **** 		case 13:
+  97:../src/mov_marcianos.c **** 			mov_marcianos[2]=derecha2;
+ 334                             		.loc 1 97 0
+ 335 0212 8F 00 00                		mov	a, !_derecha2
+ 336 0215 9D F0                   		mov	r8, a
+ 337 0217 9F 00 00                		mov	!_mov_marcianos+2, a
+  98:../src/mov_marcianos.c **** 			mov_marcianos[1]=derecha;
+ 338                             		.loc 1 98 0
+ 339 021a 8F 00 00                		mov	a, !_derecha
+ 340 021d 9D F0                   		mov	r8, a
+ 341 021f 9F 00 00                		mov	!_mov_marcianos+1, a
+  99:../src/mov_marcianos.c **** 
+ 100:../src/mov_marcianos.c **** 			break;
+ 342                             		.loc 1 100 0
+ 343 0222 00                      		nop
+ 344                             	.L3:
+ 345 0223 EC 5E 02 00             		br	!!.L1
+ 346                             	.L2:
+ 101:../src/mov_marcianos.c **** 		}
+ 102:../src/mov_marcianos.c **** 	}
+ 103:../src/mov_marcianos.c **** 	else{
+ 104:../src/mov_marcianos.c **** 		TDR02= 0xBE1F;
+ 347                             		.loc 1 104 0
+ 348 0227 C9 F0 64 FF             		movw	r8, #-156
+ 349 022b AD F0                   		movw	ax, r8
+ 350 022d BD F2                   		movw	r10, ax
+ 351 022f DA F2                   		movw	bc, r10
+ 352 0231 30 1F BE                		movw	ax, #-16865
+ 353 0234 78 00 00                		movw	[bc], ax
+ 105:../src/mov_marcianos.c **** 					R_TAU0_Channel2_Start();
+ 354                             		.loc 1 105 0
+ 355 0237 FC 00 00 00             		call	!!%code(_R_TAU0_Channel2_Start)
+ 106:../src/mov_marcianos.c **** 
+ 107:../src/mov_marcianos.c **** 		mov_marcianos[0]=21;
+ 356                             		.loc 1 107 0
+ 357 023b 51 15                   		mov	a, #21
+ 358 023d 9F 00 00                		mov	!_mov_marcianos, a
+ 108:../src/mov_marcianos.c **** 		mov_marcianos[1]=21;
+ 359                             		.loc 1 108 0
+ 360 0240 51 15                   		mov	a, #21
+ 361 0242 9F 00 00                		mov	!_mov_marcianos+1, a
+ 109:../src/mov_marcianos.c **** 		mov_marcianos[2]=16;
+ 362                             		.loc 1 109 0
+ 363 0245 51 10                   		mov	a, #16
+ 364 0247 9F 00 00                		mov	!_mov_marcianos+2, a
+ 110:../src/mov_marcianos.c **** 		mov_marcianos[3]=31;
+ 365                             		.loc 1 110 0
+ 366 024a 51 1F                   		mov	a, #31
+ 367 024c 9F 00 00                		mov	!_mov_marcianos+3, a
+ 111:../src/mov_marcianos.c **** 		mov_marcianos[4]=21;
+ 368                             		.loc 1 111 0
+ 369 024f 51 15                   		mov	a, #21
+ 370 0251 9F 00 00                		mov	!_mov_marcianos+4, a
+ 112:../src/mov_marcianos.c **** 		mov_marcianos[6]=14;
+ 371                             		.loc 1 112 0
+ 372 0254 51 0E                   		mov	a, #14
+ 373 0256 9F 00 00                		mov	!_mov_marcianos+6, a
+ 113:../src/mov_marcianos.c **** 		mov_marcianos[5]=4;
+ 374                             		.loc 1 113 0
+ 375 0259 51 04                   		mov	a, #4
+ 376 025b 9F 00 00                		mov	!_mov_marcianos+5, a
+ 377                             	.L1:
+ 114:../src/mov_marcianos.c **** 
+ 115:../src/mov_marcianos.c **** 
+ 116:../src/mov_marcianos.c **** 	}
+ 117:../src/mov_marcianos.c **** }
+ 378                             		.loc 1 117 0
+ 379 025e D7                      		ret
+ 380                             	.LFE0:
+ 408                             	.Letext0:
+ 409                             		.file 2 "../src/mov_marcianos.h"

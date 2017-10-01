@@ -1,0 +1,522 @@
+   1                             	r8	=	0xffef0
+   2                             	r16	=	0xffee8
+   3                             	r24	=	0xffee0
+   4                             	r9	=	0xffef1
+   5                             	r17	=	0xffee9
+   6                             	r25	=	0xffee1
+   7                             	r10	=	0xffef2
+   8                             	r18	=	0xffeea
+   9                             	r26	=	0xffee2
+  10                             	r11	=	0xffef3
+  11                             	r19	=	0xffeeb
+  12                             	r27	=	0xffee3
+  13                             	r12	=	0xffef4
+  14                             	r20	=	0xffeec
+  15                             	r28	=	0xffee4
+  16                             	r13	=	0xffef5
+  17                             	r21	=	0xffeed
+  18                             	r29	=	0xffee5
+  19                             	r14	=	0xffef6
+  20                             	r22	=	0xffeee
+  21                             	r30	=	0xffee6
+  22                             	r15	=	0xffef7
+  23                             	r23	=	0xffeef
+  24                             	r31	=	0xffee7
+  25                             	.text
+  26                             	.Ltext0:
+  27                             		.global	_matriz_marciano
+  28                             	.data
+  31                             	_matriz_marciano:
+  32 0000 0E                      		.byte	14
+  33 0001 11                      		.byte	17
+  34 0002 0A                      		.byte	10
+  35 0003 04                      		.byte	4
+  36 0004 0A                      		.byte	10
+  37 0005 11                      		.byte	17
+  38 0006 11                      		.byte	17
+  39                             	.text
+  40                             		.global	_pantalla_inicial
+  42                             	_pantalla_inicial:
+  43                             	.LFB0:
+  44                             		.file 1 "../src/matriz_marciano.c"
+   1:../src/matriz_marciano.c **** /*
+   2:../src/matriz_marciano.c ****  * matriz_marciano.c
+   3:../src/matriz_marciano.c ****  *
+   4:../src/matriz_marciano.c ****  *  Created on: 29/4/2017
+   5:../src/matriz_marciano.c ****  *      Author: Ivan
+   6:../src/matriz_marciano.c ****  */
+   7:../src/matriz_marciano.c **** #include "r_cg_macrodriver.h"
+   8:../src/matriz_marciano.c **** #include "r_cg_cgc.h"
+   9:../src/matriz_marciano.c **** #include "r_cg_port.h"
+  10:../src/matriz_marciano.c **** #include "r_cg_intc.h"
+  11:../src/matriz_marciano.c **** #include "r_cg_timer.h"
+  12:../src/matriz_marciano.c **** #include "matriz_marciano.h"
+  13:../src/matriz_marciano.c **** 
+  14:../src/matriz_marciano.c **** extern unsigned refresco_fila;
+  15:../src/matriz_marciano.c **** extern unsigned start;
+  16:../src/matriz_marciano.c **** 
+  17:../src/matriz_marciano.c **** void pantalla_inicial(void){
+  45                             		.loc 1 17 0
+  18:../src/matriz_marciano.c **** 	switch(refresco_fila){
+  46                             		.loc 1 18 0
+  47 0000 AF 00 00                		movw	ax, !_refresco_fila
+  48 0003 BD F0                   		movw	r8, ax
+  49 0005 44 03 00                		cmpw	ax, #3
+  50 0008 61 F8                   		 sknz
+  51 000a EC 96 01 00             		 br	!!.L3
+  52 000e AD F0                   		movw	ax, r8
+  53 0010 44 03 00                		cmpw	ax, #3
+  54 0013 61 F3                   		 sknh
+  55 0015 EC 33 00 00             		 br	!!.L4
+  56 0019 AD F0                   		movw	ax, r8
+  57 001b 44 01 00                		cmpw	ax, #1
+  58 001e 61 F8                   		 sknz
+  59 0020 EC C2 00 00             		 br	!!.L5
+  60 0024 AD F0                   		movw	ax, r8
+  61 0026 44 01 00                		cmpw	ax, #1
+  62 0029 61 F3                   		 sknh
+  63 002b EC 2C 01 00             		 br	!!.L6
+  64 002f EC 58 00 00             		br	!!.L25
+  65                             	.L4:
+  66 0033 AD F0                   		movw	ax, r8
+  67 0035 44 05 00                		cmpw	ax, #5
+  68 0038 61 F8                   		 sknz
+  69 003a EC 6A 02 00             		 br	!!.L8
+  70 003e AD F0                   		movw	ax, r8
+  71 0040 44 05 00                		cmpw	ax, #5
+  72 0043 61 D8                   		 sknc
+  73 0045 EC 00 02 00             		 br	!!.L9
+  74 0049 AD F0                   		movw	ax, r8
+  75 004b 44 06 00                		cmpw	ax, #6
+  76 004e 61 F8                   		 sknz
+  77 0050 EC D4 02 00             		 br	!!.L10
+  78 0054 EC 3B 03 00             		br	!!.L1
+  79                             	.L25:
+  19:../src/matriz_marciano.c **** 	case 0:
+  20:../src/matriz_marciano.c **** 		P15_bit.no3=0;
+  80                             		.loc 1 20 0
+  81 0058 C9 F0 0F FF             		movw	r8, #-241
+  82 005c AD F0                   		movw	ax, r8
+  83 005e BD F4                   		movw	r12, ax
+  84 0060 FA F4                   		movw	hl, r12
+  85 0062 8B                      		mov	a, [hl]
+  86 0063 9D F2                   		mov	r10, a
+  87 0065 5A F2 F7                		and	r10, #-9
+  88 0068 AD F0                   		movw	ax, r8
+  89 006a DA F4                   		movw	bc, r12
+  90 006c 8D F2                   		mov	a, r10
+  91 006e 48 00 00                		mov	[bc], a
+  21:../src/matriz_marciano.c **** 		if(start==0)
+  92                             		.loc 1 21 0
+  93 0071 AF 00 00                		movw	ax, !_start
+  94 0074 BD F0                   		movw	r8, ax
+  95 0076 44 00 00                		cmpw	ax, #0
+  96 0079 61 E8                   		 skz
+  97 007b EC 97 00 00             		 br	!!.L11
+  22:../src/matriz_marciano.c **** 			P1= matriz_marciano[6];
+  98                             		.loc 1 22 0
+  99 007f C9 F0 01 FF             		movw	r8, #-255
+ 100 0083 8F 00 00                		mov	a, !_matriz_marciano+6
+ 101 0086 9D F2                   		mov	r10, a
+ 102 0088 AD F0                   		movw	ax, r8
+ 103 008a BD F4                   		movw	r12, ax
+ 104 008c DA F4                   		movw	bc, r12
+ 105 008e 8D F2                   		mov	a, r10
+ 106 0090 48 00 00                		mov	[bc], a
+ 107 0093 EC A5 00 00             		br	!!.L12
+ 108                             	.L11:
+  23:../src/matriz_marciano.c **** 		else
+  24:../src/matriz_marciano.c **** 			P1=0;
+ 109                             		.loc 1 24 0
+ 110 0097 C9 F0 01 FF             		movw	r8, #-255
+ 111 009b AD F0                   		movw	ax, r8
+ 112 009d BD F2                   		movw	r10, ax
+ 113 009f DA F2                   		movw	bc, r10
+ 114 00a1 F1                      		clrb	a
+ 115 00a2 48 00 00                		mov	[bc], a
+ 116                             	.L12:
+  25:../src/matriz_marciano.c **** 		P15_bit.no5=1;
+ 117                             		.loc 1 25 0
+ 118 00a5 C9 F0 0F FF             		movw	r8, #-241
+ 119 00a9 AD F0                   		movw	ax, r8
+ 120 00ab BD F4                   		movw	r12, ax
+ 121 00ad FA F4                   		movw	hl, r12
+ 122 00af 8B                      		mov	a, [hl]
+ 123 00b0 9D F2                   		mov	r10, a
+ 124 00b2 6A F2 20                		or	r10, #32
+ 125 00b5 AD F0                   		movw	ax, r8
+ 126 00b7 DA F4                   		movw	bc, r12
+ 127 00b9 8D F2                   		mov	a, r10
+ 128 00bb 48 00 00                		mov	[bc], a
+  26:../src/matriz_marciano.c **** 		break;
+ 129                             		.loc 1 26 0
+ 130 00be EC 3B 03 00             		br	!!.L1
+ 131                             	.L5:
+  27:../src/matriz_marciano.c **** 	case 1:
+  28:../src/matriz_marciano.c **** 		P15_bit.no5=0;
+ 132                             		.loc 1 28 0
+ 133 00c2 C9 F0 0F FF             		movw	r8, #-241
+ 134 00c6 AD F0                   		movw	ax, r8
+ 135 00c8 BD F4                   		movw	r12, ax
+ 136 00ca FA F4                   		movw	hl, r12
+ 137 00cc 8B                      		mov	a, [hl]
+ 138 00cd 9D F2                   		mov	r10, a
+ 139 00cf 5A F2 DF                		and	r10, #-33
+ 140 00d2 AD F0                   		movw	ax, r8
+ 141 00d4 DA F4                   		movw	bc, r12
+ 142 00d6 8D F2                   		mov	a, r10
+ 143 00d8 48 00 00                		mov	[bc], a
+  29:../src/matriz_marciano.c **** 		if(start==0)
+ 144                             		.loc 1 29 0
+ 145 00db AF 00 00                		movw	ax, !_start
+ 146 00de BD F0                   		movw	r8, ax
+ 147 00e0 44 00 00                		cmpw	ax, #0
+ 148 00e3 61 E8                   		 skz
+ 149 00e5 EC 01 01 00             		 br	!!.L13
+  30:../src/matriz_marciano.c **** 			P1= matriz_marciano[5];
+ 150                             		.loc 1 30 0
+ 151 00e9 C9 F0 01 FF             		movw	r8, #-255
+ 152 00ed 8F 00 00                		mov	a, !_matriz_marciano+5
+ 153 00f0 9D F2                   		mov	r10, a
+ 154 00f2 AD F0                   		movw	ax, r8
+ 155 00f4 BD F4                   		movw	r12, ax
+ 156 00f6 DA F4                   		movw	bc, r12
+ 157 00f8 8D F2                   		mov	a, r10
+ 158 00fa 48 00 00                		mov	[bc], a
+ 159 00fd EC 0F 01 00             		br	!!.L14
+ 160                             	.L13:
+  31:../src/matriz_marciano.c **** 		else
+  32:../src/matriz_marciano.c **** 			P1=0;
+ 161                             		.loc 1 32 0
+ 162 0101 C9 F0 01 FF             		movw	r8, #-255
+ 163 0105 AD F0                   		movw	ax, r8
+ 164 0107 BD F2                   		movw	r10, ax
+ 165 0109 DA F2                   		movw	bc, r10
+ 166 010b F1                      		clrb	a
+ 167 010c 48 00 00                		mov	[bc], a
+ 168                             	.L14:
+  33:../src/matriz_marciano.c **** 		P15_bit.no6=1;
+ 169                             		.loc 1 33 0
+ 170 010f C9 F0 0F FF             		movw	r8, #-241
+ 171 0113 AD F0                   		movw	ax, r8
+ 172 0115 BD F4                   		movw	r12, ax
+ 173 0117 FA F4                   		movw	hl, r12
+ 174 0119 8B                      		mov	a, [hl]
+ 175 011a 9D F2                   		mov	r10, a
+ 176 011c 6A F2 40                		or	r10, #64
+ 177 011f AD F0                   		movw	ax, r8
+ 178 0121 DA F4                   		movw	bc, r12
+ 179 0123 8D F2                   		mov	a, r10
+ 180 0125 48 00 00                		mov	[bc], a
+  34:../src/matriz_marciano.c **** 		break;
+ 181                             		.loc 1 34 0
+ 182 0128 EC 3B 03 00             		br	!!.L1
+ 183                             	.L6:
+  35:../src/matriz_marciano.c **** 	case 2:
+  36:../src/matriz_marciano.c **** 		P15_bit.no6=0;
+ 184                             		.loc 1 36 0
+ 185 012c C9 F0 0F FF             		movw	r8, #-241
+ 186 0130 AD F0                   		movw	ax, r8
+ 187 0132 BD F4                   		movw	r12, ax
+ 188 0134 FA F4                   		movw	hl, r12
+ 189 0136 8B                      		mov	a, [hl]
+ 190 0137 9D F2                   		mov	r10, a
+ 191 0139 5A F2 BF                		and	r10, #-65
+ 192 013c AD F0                   		movw	ax, r8
+ 193 013e DA F4                   		movw	bc, r12
+ 194 0140 8D F2                   		mov	a, r10
+ 195 0142 48 00 00                		mov	[bc], a
+  37:../src/matriz_marciano.c **** 		if(start==0)
+ 196                             		.loc 1 37 0
+ 197 0145 AF 00 00                		movw	ax, !_start
+ 198 0148 BD F0                   		movw	r8, ax
+ 199 014a 44 00 00                		cmpw	ax, #0
+ 200 014d 61 E8                   		 skz
+ 201 014f EC 6B 01 00             		 br	!!.L15
+  38:../src/matriz_marciano.c **** 			P1= matriz_marciano[4];
+ 202                             		.loc 1 38 0
+ 203 0153 C9 F0 01 FF             		movw	r8, #-255
+ 204 0157 8F 00 00                		mov	a, !_matriz_marciano+4
+ 205 015a 9D F2                   		mov	r10, a
+ 206 015c AD F0                   		movw	ax, r8
+ 207 015e BD F4                   		movw	r12, ax
+ 208 0160 DA F4                   		movw	bc, r12
+ 209 0162 8D F2                   		mov	a, r10
+ 210 0164 48 00 00                		mov	[bc], a
+ 211 0167 EC 79 01 00             		br	!!.L16
+ 212                             	.L15:
+  39:../src/matriz_marciano.c **** 		else
+  40:../src/matriz_marciano.c **** 			P1=0;
+ 213                             		.loc 1 40 0
+ 214 016b C9 F0 01 FF             		movw	r8, #-255
+ 215 016f AD F0                   		movw	ax, r8
+ 216 0171 BD F2                   		movw	r10, ax
+ 217 0173 DA F2                   		movw	bc, r10
+ 218 0175 F1                      		clrb	a
+ 219 0176 48 00 00                		mov	[bc], a
+ 220                             	.L16:
+  41:../src/matriz_marciano.c **** 		P7_bit.no1=1;
+ 221                             		.loc 1 41 0
+ 222 0179 C9 F0 07 FF             		movw	r8, #-249
+ 223 017d AD F0                   		movw	ax, r8
+ 224 017f BD F4                   		movw	r12, ax
+ 225 0181 FA F4                   		movw	hl, r12
+ 226 0183 8B                      		mov	a, [hl]
+ 227 0184 9D F2                   		mov	r10, a
+ 228 0186 6A F2 02                		or	r10, #2
+ 229 0189 AD F0                   		movw	ax, r8
+ 230 018b DA F4                   		movw	bc, r12
+ 231 018d 8D F2                   		mov	a, r10
+ 232 018f 48 00 00                		mov	[bc], a
+  42:../src/matriz_marciano.c **** 		break;
+ 233                             		.loc 1 42 0
+ 234 0192 EC 3B 03 00             		br	!!.L1
+ 235                             	.L3:
+  43:../src/matriz_marciano.c **** 	case 3:
+  44:../src/matriz_marciano.c **** 		P7_bit.no1=0;
+ 236                             		.loc 1 44 0
+ 237 0196 C9 F0 07 FF             		movw	r8, #-249
+ 238 019a AD F0                   		movw	ax, r8
+ 239 019c BD F4                   		movw	r12, ax
+ 240 019e FA F4                   		movw	hl, r12
+ 241 01a0 8B                      		mov	a, [hl]
+ 242 01a1 9D F2                   		mov	r10, a
+ 243 01a3 5A F2 FD                		and	r10, #-3
+ 244 01a6 AD F0                   		movw	ax, r8
+ 245 01a8 DA F4                   		movw	bc, r12
+ 246 01aa 8D F2                   		mov	a, r10
+ 247 01ac 48 00 00                		mov	[bc], a
+  45:../src/matriz_marciano.c **** 		if(start==0)
+ 248                             		.loc 1 45 0
+ 249 01af AF 00 00                		movw	ax, !_start
+ 250 01b2 BD F0                   		movw	r8, ax
+ 251 01b4 44 00 00                		cmpw	ax, #0
+ 252 01b7 61 E8                   		 skz
+ 253 01b9 EC D5 01 00             		 br	!!.L17
+  46:../src/matriz_marciano.c **** 			P1= matriz_marciano[3];
+ 254                             		.loc 1 46 0
+ 255 01bd C9 F0 01 FF             		movw	r8, #-255
+ 256 01c1 8F 00 00                		mov	a, !_matriz_marciano+3
+ 257 01c4 9D F2                   		mov	r10, a
+ 258 01c6 AD F0                   		movw	ax, r8
+ 259 01c8 BD F4                   		movw	r12, ax
+ 260 01ca DA F4                   		movw	bc, r12
+ 261 01cc 8D F2                   		mov	a, r10
+ 262 01ce 48 00 00                		mov	[bc], a
+ 263 01d1 EC E3 01 00             		br	!!.L18
+ 264                             	.L17:
+  47:../src/matriz_marciano.c **** 		else
+  48:../src/matriz_marciano.c **** 			P1=0;
+ 265                             		.loc 1 48 0
+ 266 01d5 C9 F0 01 FF             		movw	r8, #-255
+ 267 01d9 AD F0                   		movw	ax, r8
+ 268 01db BD F2                   		movw	r10, ax
+ 269 01dd DA F2                   		movw	bc, r10
+ 270 01df F1                      		clrb	a
+ 271 01e0 48 00 00                		mov	[bc], a
+ 272                             	.L18:
+  49:../src/matriz_marciano.c **** 		P7_bit.no2=1;
+ 273                             		.loc 1 49 0
+ 274 01e3 C9 F0 07 FF             		movw	r8, #-249
+ 275 01e7 AD F0                   		movw	ax, r8
+ 276 01e9 BD F4                   		movw	r12, ax
+ 277 01eb FA F4                   		movw	hl, r12
+ 278 01ed 8B                      		mov	a, [hl]
+ 279 01ee 9D F2                   		mov	r10, a
+ 280 01f0 6A F2 04                		or	r10, #4
+ 281 01f3 AD F0                   		movw	ax, r8
+ 282 01f5 DA F4                   		movw	bc, r12
+ 283 01f7 8D F2                   		mov	a, r10
+ 284 01f9 48 00 00                		mov	[bc], a
+  50:../src/matriz_marciano.c **** 		break;
+ 285                             		.loc 1 50 0
+ 286 01fc EC 3B 03 00             		br	!!.L1
+ 287                             	.L9:
+  51:../src/matriz_marciano.c **** 	case 4:
+  52:../src/matriz_marciano.c **** 		P7_bit.no2=0;
+ 288                             		.loc 1 52 0
+ 289 0200 C9 F0 07 FF             		movw	r8, #-249
+ 290 0204 AD F0                   		movw	ax, r8
+ 291 0206 BD F4                   		movw	r12, ax
+ 292 0208 FA F4                   		movw	hl, r12
+ 293 020a 8B                      		mov	a, [hl]
+ 294 020b 9D F2                   		mov	r10, a
+ 295 020d 5A F2 FB                		and	r10, #-5
+ 296 0210 AD F0                   		movw	ax, r8
+ 297 0212 DA F4                   		movw	bc, r12
+ 298 0214 8D F2                   		mov	a, r10
+ 299 0216 48 00 00                		mov	[bc], a
+  53:../src/matriz_marciano.c **** 		if(start==0)
+ 300                             		.loc 1 53 0
+ 301 0219 AF 00 00                		movw	ax, !_start
+ 302 021c BD F0                   		movw	r8, ax
+ 303 021e 44 00 00                		cmpw	ax, #0
+ 304 0221 61 E8                   		 skz
+ 305 0223 EC 3F 02 00             		 br	!!.L19
+  54:../src/matriz_marciano.c **** 			P1= matriz_marciano[2];
+ 306                             		.loc 1 54 0
+ 307 0227 C9 F0 01 FF             		movw	r8, #-255
+ 308 022b 8F 00 00                		mov	a, !_matriz_marciano+2
+ 309 022e 9D F2                   		mov	r10, a
+ 310 0230 AD F0                   		movw	ax, r8
+ 311 0232 BD F4                   		movw	r12, ax
+ 312 0234 DA F4                   		movw	bc, r12
+ 313 0236 8D F2                   		mov	a, r10
+ 314 0238 48 00 00                		mov	[bc], a
+ 315 023b EC 4D 02 00             		br	!!.L20
+ 316                             	.L19:
+  55:../src/matriz_marciano.c **** 		else
+  56:../src/matriz_marciano.c **** 			P1=0;
+ 317                             		.loc 1 56 0
+ 318 023f C9 F0 01 FF             		movw	r8, #-255
+ 319 0243 AD F0                   		movw	ax, r8
+ 320 0245 BD F2                   		movw	r10, ax
+ 321 0247 DA F2                   		movw	bc, r10
+ 322 0249 F1                      		clrb	a
+ 323 024a 48 00 00                		mov	[bc], a
+ 324                             	.L20:
+  57:../src/matriz_marciano.c **** 		P7_bit.no0=1;
+ 325                             		.loc 1 57 0
+ 326 024d C9 F0 07 FF             		movw	r8, #-249
+ 327 0251 AD F0                   		movw	ax, r8
+ 328 0253 BD F4                   		movw	r12, ax
+ 329 0255 FA F4                   		movw	hl, r12
+ 330 0257 8B                      		mov	a, [hl]
+ 331 0258 9D F2                   		mov	r10, a
+ 332 025a 6A F2 01                		or	r10, #1
+ 333 025d AD F0                   		movw	ax, r8
+ 334 025f DA F4                   		movw	bc, r12
+ 335 0261 8D F2                   		mov	a, r10
+ 336 0263 48 00 00                		mov	[bc], a
+  58:../src/matriz_marciano.c **** 		break;
+ 337                             		.loc 1 58 0
+ 338 0266 EC 3B 03 00             		br	!!.L1
+ 339                             	.L8:
+  59:../src/matriz_marciano.c **** 	case 5:
+  60:../src/matriz_marciano.c **** 		P7_bit.no0=0;
+ 340                             		.loc 1 60 0
+ 341 026a C9 F0 07 FF             		movw	r8, #-249
+ 342 026e AD F0                   		movw	ax, r8
+ 343 0270 BD F4                   		movw	r12, ax
+ 344 0272 FA F4                   		movw	hl, r12
+ 345 0274 8B                      		mov	a, [hl]
+ 346 0275 9D F2                   		mov	r10, a
+ 347 0277 5A F2 FE                		and	r10, #-2
+ 348 027a AD F0                   		movw	ax, r8
+ 349 027c DA F4                   		movw	bc, r12
+ 350 027e 8D F2                   		mov	a, r10
+ 351 0280 48 00 00                		mov	[bc], a
+  61:../src/matriz_marciano.c **** 		if(start==0)
+ 352                             		.loc 1 61 0
+ 353 0283 AF 00 00                		movw	ax, !_start
+ 354 0286 BD F0                   		movw	r8, ax
+ 355 0288 44 00 00                		cmpw	ax, #0
+ 356 028b 61 E8                   		 skz
+ 357 028d EC A9 02 00             		 br	!!.L21
+  62:../src/matriz_marciano.c **** 			P1= matriz_marciano[1];
+ 358                             		.loc 1 62 0
+ 359 0291 C9 F0 01 FF             		movw	r8, #-255
+ 360 0295 8F 00 00                		mov	a, !_matriz_marciano+1
+ 361 0298 9D F2                   		mov	r10, a
+ 362 029a AD F0                   		movw	ax, r8
+ 363 029c BD F4                   		movw	r12, ax
+ 364 029e DA F4                   		movw	bc, r12
+ 365 02a0 8D F2                   		mov	a, r10
+ 366 02a2 48 00 00                		mov	[bc], a
+ 367 02a5 EC B7 02 00             		br	!!.L22
+ 368                             	.L21:
+  63:../src/matriz_marciano.c **** 		else
+  64:../src/matriz_marciano.c **** 			P1=0;
+ 369                             		.loc 1 64 0
+ 370 02a9 C9 F0 01 FF             		movw	r8, #-255
+ 371 02ad AD F0                   		movw	ax, r8
+ 372 02af BD F2                   		movw	r10, ax
+ 373 02b1 DA F2                   		movw	bc, r10
+ 374 02b3 F1                      		clrb	a
+ 375 02b4 48 00 00                		mov	[bc], a
+ 376                             	.L22:
+  65:../src/matriz_marciano.c **** 		P15_bit.no4=1;
+ 377                             		.loc 1 65 0
+ 378 02b7 C9 F0 0F FF             		movw	r8, #-241
+ 379 02bb AD F0                   		movw	ax, r8
+ 380 02bd BD F4                   		movw	r12, ax
+ 381 02bf FA F4                   		movw	hl, r12
+ 382 02c1 8B                      		mov	a, [hl]
+ 383 02c2 9D F2                   		mov	r10, a
+ 384 02c4 6A F2 10                		or	r10, #16
+ 385 02c7 AD F0                   		movw	ax, r8
+ 386 02c9 DA F4                   		movw	bc, r12
+ 387 02cb 8D F2                   		mov	a, r10
+ 388 02cd 48 00 00                		mov	[bc], a
+  66:../src/matriz_marciano.c **** 		break;
+ 389                             		.loc 1 66 0
+ 390 02d0 EC 3B 03 00             		br	!!.L1
+ 391                             	.L10:
+  67:../src/matriz_marciano.c **** 	case 6:
+  68:../src/matriz_marciano.c **** 		P15_bit.no4=0;
+ 392                             		.loc 1 68 0
+ 393 02d4 C9 F0 0F FF             		movw	r8, #-241
+ 394 02d8 AD F0                   		movw	ax, r8
+ 395 02da BD F4                   		movw	r12, ax
+ 396 02dc FA F4                   		movw	hl, r12
+ 397 02de 8B                      		mov	a, [hl]
+ 398 02df 9D F2                   		mov	r10, a
+ 399 02e1 5A F2 EF                		and	r10, #-17
+ 400 02e4 AD F0                   		movw	ax, r8
+ 401 02e6 DA F4                   		movw	bc, r12
+ 402 02e8 8D F2                   		mov	a, r10
+ 403 02ea 48 00 00                		mov	[bc], a
+  69:../src/matriz_marciano.c **** 		if(start==0)
+ 404                             		.loc 1 69 0
+ 405 02ed AF 00 00                		movw	ax, !_start
+ 406 02f0 BD F0                   		movw	r8, ax
+ 407 02f2 44 00 00                		cmpw	ax, #0
+ 408 02f5 61 E8                   		 skz
+ 409 02f7 EC 13 03 00             		 br	!!.L23
+  70:../src/matriz_marciano.c **** 			P1= matriz_marciano[0];
+ 410                             		.loc 1 70 0
+ 411 02fb C9 F0 01 FF             		movw	r8, #-255
+ 412 02ff 8F 00 00                		mov	a, !_matriz_marciano
+ 413 0302 9D F2                   		mov	r10, a
+ 414 0304 AD F0                   		movw	ax, r8
+ 415 0306 BD F4                   		movw	r12, ax
+ 416 0308 DA F4                   		movw	bc, r12
+ 417 030a 8D F2                   		mov	a, r10
+ 418 030c 48 00 00                		mov	[bc], a
+ 419 030f EC 21 03 00             		br	!!.L24
+ 420                             	.L23:
+  71:../src/matriz_marciano.c **** 		else
+  72:../src/matriz_marciano.c **** 			P1=0;
+ 421                             		.loc 1 72 0
+ 422 0313 C9 F0 01 FF             		movw	r8, #-255
+ 423 0317 AD F0                   		movw	ax, r8
+ 424 0319 BD F2                   		movw	r10, ax
+ 425 031b DA F2                   		movw	bc, r10
+ 426 031d F1                      		clrb	a
+ 427 031e 48 00 00                		mov	[bc], a
+ 428                             	.L24:
+  73:../src/matriz_marciano.c **** 		P15_bit.no3=1;
+ 429                             		.loc 1 73 0
+ 430 0321 C9 F0 0F FF             		movw	r8, #-241
+ 431 0325 AD F0                   		movw	ax, r8
+ 432 0327 BD F4                   		movw	r12, ax
+ 433 0329 FA F4                   		movw	hl, r12
+ 434 032b 8B                      		mov	a, [hl]
+ 435 032c 9D F2                   		mov	r10, a
+ 436 032e 6A F2 08                		or	r10, #8
+ 437 0331 AD F0                   		movw	ax, r8
+ 438 0333 DA F4                   		movw	bc, r12
+ 439 0335 8D F2                   		mov	a, r10
+ 440 0337 48 00 00                		mov	[bc], a
+  74:../src/matriz_marciano.c **** 		break;
+ 441                             		.loc 1 74 0
+ 442 033a 00                      		nop
+ 443                             	.L1:
+  75:../src/matriz_marciano.c **** 	}
+  76:../src/matriz_marciano.c **** }
+ 444                             		.loc 1 76 0
+ 445 033b D7                      		ret
+ 446                             	.LFE0:
+ 474                             	.Letext0:
+ 475                             		.file 2 "../src/iodefine.h"
+ 476                             		.file 3 "../src/matriz_marciano.h"

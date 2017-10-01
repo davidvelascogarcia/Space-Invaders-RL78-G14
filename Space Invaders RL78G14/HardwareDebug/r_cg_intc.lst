@@ -1,0 +1,795 @@
+   1                             	r8	=	0xffef0
+   2                             	r16	=	0xffee8
+   3                             	r24	=	0xffee0
+   4                             	r9	=	0xffef1
+   5                             	r17	=	0xffee9
+   6                             	r25	=	0xffee1
+   7                             	r10	=	0xffef2
+   8                             	r18	=	0xffeea
+   9                             	r26	=	0xffee2
+  10                             	r11	=	0xffef3
+  11                             	r19	=	0xffeeb
+  12                             	r27	=	0xffee3
+  13                             	r12	=	0xffef4
+  14                             	r20	=	0xffeec
+  15                             	r28	=	0xffee4
+  16                             	r13	=	0xffef5
+  17                             	r21	=	0xffeed
+  18                             	r29	=	0xffee5
+  19                             	r14	=	0xffef6
+  20                             	r22	=	0xffeee
+  21                             	r30	=	0xffee6
+  22                             	r15	=	0xffef7
+  23                             	r23	=	0xffeef
+  24                             	r31	=	0xffee7
+  25                             	.text
+  26                             	.Ltext0:
+  27                             		.global	_R_INTC_Create
+  29                             	_R_INTC_Create:
+  30                             	.LFB0:
+  31                             		.file 1 "../src/r_cg_intc.c"
+   1:../src/r_cg_intc.c **** /**************************************************************************************************
+   2:../src/r_cg_intc.c **** * DISCLAIMER
+   3:../src/r_cg_intc.c **** * This software is supplied by Renesas Electronics Corporation and is only intended for use with Re
+   4:../src/r_cg_intc.c **** * No other uses are authorized. This software is owned by Renesas Electronics Corporation and is pr
+   5:../src/r_cg_intc.c **** * applicable laws, including copyright laws. 
+   6:../src/r_cg_intc.c **** * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIESREGARDING THIS SOFTWARE, WHETHER
+   7:../src/r_cg_intc.c **** * OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULA
+   8:../src/r_cg_intc.c **** * NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED N
+   9:../src/r_cg_intc.c **** * LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE 
+  10:../src/r_cg_intc.c **** * INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, E
+  11:../src/r_cg_intc.c **** * ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  12:../src/r_cg_intc.c **** * Renesas reserves the right, without notice, to make changes to this software and to discontinue t
+  13:../src/r_cg_intc.c **** * of this software. By using this software, you agree to the additional terms and conditions found 
+  14:../src/r_cg_intc.c **** * following link:
+  15:../src/r_cg_intc.c **** * http://www.renesas.com/disclaimer
+  16:../src/r_cg_intc.c **** *
+  17:../src/r_cg_intc.c **** * Copyright (C) 2011, 2015 Renesas Electronics Corporation. All rights reserved.
+  18:../src/r_cg_intc.c **** ***************************************************************************************************
+  19:../src/r_cg_intc.c **** 
+  20:../src/r_cg_intc.c **** /**************************************************************************************************
+  21:../src/r_cg_intc.c **** * File Name    : r_cg_intc.c
+  22:../src/r_cg_intc.c **** * Version      : CodeGenerator for RL78/G14 V2.04.02.01 [15 May 2015]
+  23:../src/r_cg_intc.c **** * Device(s)    : R5F104PF
+  24:../src/r_cg_intc.c **** * Tool-Chain   : GCCRL78
+  25:../src/r_cg_intc.c **** * Description  : This file implements device driver for INTC module.
+  26:../src/r_cg_intc.c **** * Creation Date: 29/04/2017
+  27:../src/r_cg_intc.c **** ***************************************************************************************************
+  28:../src/r_cg_intc.c **** 
+  29:../src/r_cg_intc.c **** /**************************************************************************************************
+  30:../src/r_cg_intc.c **** Includes
+  31:../src/r_cg_intc.c **** ***************************************************************************************************
+  32:../src/r_cg_intc.c **** #include "r_cg_macrodriver.h"
+  33:../src/r_cg_intc.c **** #include "r_cg_intc.h"
+  34:../src/r_cg_intc.c **** /* Start user code for include. Do not edit comment generated here */
+  35:../src/r_cg_intc.c **** /* End user code. Do not edit comment generated here */
+  36:../src/r_cg_intc.c **** #include "r_cg_userdefine.h"
+  37:../src/r_cg_intc.c **** 
+  38:../src/r_cg_intc.c **** /**************************************************************************************************
+  39:../src/r_cg_intc.c **** Global variables and functions
+  40:../src/r_cg_intc.c **** ***************************************************************************************************
+  41:../src/r_cg_intc.c **** /* Start user code for global. Do not edit comment generated here */
+  42:../src/r_cg_intc.c **** /* End user code. Do not edit comment generated here */
+  43:../src/r_cg_intc.c **** 
+  44:../src/r_cg_intc.c **** /**************************************************************************************************
+  45:../src/r_cg_intc.c **** * Function Name: R_INTC_Create
+  46:../src/r_cg_intc.c **** * Description  : This function initializes INTP module.
+  47:../src/r_cg_intc.c **** * Arguments    : None
+  48:../src/r_cg_intc.c **** * Return Value : None
+  49:../src/r_cg_intc.c **** ***************************************************************************************************
+  50:../src/r_cg_intc.c **** void R_INTC_Create(void)
+  51:../src/r_cg_intc.c **** {
+  32                             		.loc 1 51 0
+  52:../src/r_cg_intc.c ****     PMK0 = 1U;    /* disable INTP0 operation */
+  33                             		.loc 1 52 0
+  34 0000 C9 F0 E4 FF             		movw	r8, #-28
+  35 0004 AD F0                   		movw	ax, r8
+  36 0006 BD F4                   		movw	r12, ax
+  37 0008 FA F4                   		movw	hl, r12
+  38 000a 8B                      		mov	a, [hl]
+  39 000b 9D F2                   		mov	r10, a
+  40 000d 6A F2 04                		or	r10, #4
+  41 0010 AD F0                   		movw	ax, r8
+  42 0012 DA F4                   		movw	bc, r12
+  43 0014 8D F2                   		mov	a, r10
+  44 0016 48 00 00                		mov	[bc], a
+  53:../src/r_cg_intc.c ****     PIF0 = 0U;    /* clear INTP0 interrupt flag */
+  45                             		.loc 1 53 0
+  46 0019 C9 F0 E0 FF             		movw	r8, #-32
+  47 001d AD F0                   		movw	ax, r8
+  48 001f BD F4                   		movw	r12, ax
+  49 0021 FA F4                   		movw	hl, r12
+  50 0023 8B                      		mov	a, [hl]
+  51 0024 9D F2                   		mov	r10, a
+  52 0026 5A F2 FB                		and	r10, #-5
+  53 0029 AD F0                   		movw	ax, r8
+  54 002b DA F4                   		movw	bc, r12
+  55 002d 8D F2                   		mov	a, r10
+  56 002f 48 00 00                		mov	[bc], a
+  54:../src/r_cg_intc.c ****     PMK1 = 1U;    /* disable INTP1 operation */
+  57                             		.loc 1 54 0
+  58 0032 C9 F0 E4 FF             		movw	r8, #-28
+  59 0036 AD F0                   		movw	ax, r8
+  60 0038 BD F4                   		movw	r12, ax
+  61 003a FA F4                   		movw	hl, r12
+  62 003c 8B                      		mov	a, [hl]
+  63 003d 9D F2                   		mov	r10, a
+  64 003f 6A F2 08                		or	r10, #8
+  65 0042 AD F0                   		movw	ax, r8
+  66 0044 DA F4                   		movw	bc, r12
+  67 0046 8D F2                   		mov	a, r10
+  68 0048 48 00 00                		mov	[bc], a
+  55:../src/r_cg_intc.c ****     PIF1 = 0U;    /* clear INTP1 interrupt flag */
+  69                             		.loc 1 55 0
+  70 004b C9 F0 E0 FF             		movw	r8, #-32
+  71 004f AD F0                   		movw	ax, r8
+  72 0051 BD F4                   		movw	r12, ax
+  73 0053 FA F4                   		movw	hl, r12
+  74 0055 8B                      		mov	a, [hl]
+  75 0056 9D F2                   		mov	r10, a
+  76 0058 5A F2 F7                		and	r10, #-9
+  77 005b AD F0                   		movw	ax, r8
+  78 005d DA F4                   		movw	bc, r12
+  79 005f 8D F2                   		mov	a, r10
+  80 0061 48 00 00                		mov	[bc], a
+  56:../src/r_cg_intc.c ****     PMK2 = 1U;    /* disable INTP2 operation */
+  81                             		.loc 1 56 0
+  82 0064 C9 F0 E4 FF             		movw	r8, #-28
+  83 0068 AD F0                   		movw	ax, r8
+  84 006a BD F4                   		movw	r12, ax
+  85 006c FA F4                   		movw	hl, r12
+  86 006e 8B                      		mov	a, [hl]
+  87 006f 9D F2                   		mov	r10, a
+  88 0071 6A F2 10                		or	r10, #16
+  89 0074 AD F0                   		movw	ax, r8
+  90 0076 DA F4                   		movw	bc, r12
+  91 0078 8D F2                   		mov	a, r10
+  92 007a 48 00 00                		mov	[bc], a
+  57:../src/r_cg_intc.c ****     PIF2 = 0U;    /* clear INTP2 interrupt flag */
+  93                             		.loc 1 57 0
+  94 007d C9 F0 E0 FF             		movw	r8, #-32
+  95 0081 AD F0                   		movw	ax, r8
+  96 0083 BD F4                   		movw	r12, ax
+  97 0085 FA F4                   		movw	hl, r12
+  98 0087 8B                      		mov	a, [hl]
+  99 0088 9D F2                   		mov	r10, a
+ 100 008a 5A F2 EF                		and	r10, #-17
+ 101 008d AD F0                   		movw	ax, r8
+ 102 008f DA F4                   		movw	bc, r12
+ 103 0091 8D F2                   		mov	a, r10
+ 104 0093 48 00 00                		mov	[bc], a
+  58:../src/r_cg_intc.c ****     PMK3 = 1U;    /* disable INTP3 operation */
+ 105                             		.loc 1 58 0
+ 106 0096 C9 F0 E4 FF             		movw	r8, #-28
+ 107 009a AD F0                   		movw	ax, r8
+ 108 009c BD F4                   		movw	r12, ax
+ 109 009e FA F4                   		movw	hl, r12
+ 110 00a0 8B                      		mov	a, [hl]
+ 111 00a1 9D F2                   		mov	r10, a
+ 112 00a3 6A F2 20                		or	r10, #32
+ 113 00a6 AD F0                   		movw	ax, r8
+ 114 00a8 DA F4                   		movw	bc, r12
+ 115 00aa 8D F2                   		mov	a, r10
+ 116 00ac 48 00 00                		mov	[bc], a
+  59:../src/r_cg_intc.c ****     PIF3 = 0U;    /* clear INTP3 interrupt flag */
+ 117                             		.loc 1 59 0
+ 118 00af C9 F0 E0 FF             		movw	r8, #-32
+ 119 00b3 AD F0                   		movw	ax, r8
+ 120 00b5 BD F4                   		movw	r12, ax
+ 121 00b7 FA F4                   		movw	hl, r12
+ 122 00b9 8B                      		mov	a, [hl]
+ 123 00ba 9D F2                   		mov	r10, a
+ 124 00bc 5A F2 DF                		and	r10, #-33
+ 125 00bf AD F0                   		movw	ax, r8
+ 126 00c1 DA F4                   		movw	bc, r12
+ 127 00c3 8D F2                   		mov	a, r10
+ 128 00c5 48 00 00                		mov	[bc], a
+  60:../src/r_cg_intc.c ****     PMK4 = 1U;    /* disable INTP4 operation */
+ 129                             		.loc 1 60 0
+ 130 00c8 C9 F0 E4 FF             		movw	r8, #-28
+ 131 00cc AD F0                   		movw	ax, r8
+ 132 00ce BD F4                   		movw	r12, ax
+ 133 00d0 FA F4                   		movw	hl, r12
+ 134 00d2 8B                      		mov	a, [hl]
+ 135 00d3 9D F2                   		mov	r10, a
+ 136 00d5 6A F2 40                		or	r10, #64
+ 137 00d8 AD F0                   		movw	ax, r8
+ 138 00da DA F4                   		movw	bc, r12
+ 139 00dc 8D F2                   		mov	a, r10
+ 140 00de 48 00 00                		mov	[bc], a
+  61:../src/r_cg_intc.c ****     PIF4 = 0U;    /* clear INTP4 interrupt flag */
+ 141                             		.loc 1 61 0
+ 142 00e1 C9 F0 E0 FF             		movw	r8, #-32
+ 143 00e5 AD F0                   		movw	ax, r8
+ 144 00e7 BD F4                   		movw	r12, ax
+ 145 00e9 FA F4                   		movw	hl, r12
+ 146 00eb 8B                      		mov	a, [hl]
+ 147 00ec 9D F2                   		mov	r10, a
+ 148 00ee 5A F2 BF                		and	r10, #-65
+ 149 00f1 AD F0                   		movw	ax, r8
+ 150 00f3 DA F4                   		movw	bc, r12
+ 151 00f5 8D F2                   		mov	a, r10
+ 152 00f7 48 00 00                		mov	[bc], a
+  62:../src/r_cg_intc.c ****     PMK5 = 1U;    /* disable INTP5 operation */
+ 153                             		.loc 1 62 0
+ 154 00fa C9 F0 E4 FF             		movw	r8, #-28
+ 155 00fe AD F0                   		movw	ax, r8
+ 156 0100 BD F4                   		movw	r12, ax
+ 157 0102 FA F4                   		movw	hl, r12
+ 158 0104 8B                      		mov	a, [hl]
+ 159 0105 9D F2                   		mov	r10, a
+ 160 0107 6A F2 80                		or	r10, #-128
+ 161 010a AD F0                   		movw	ax, r8
+ 162 010c DA F4                   		movw	bc, r12
+ 163 010e 8D F2                   		mov	a, r10
+ 164 0110 48 00 00                		mov	[bc], a
+  63:../src/r_cg_intc.c ****     PIF5 = 0U;    /* clear INTP5 interrupt flag */
+ 165                             		.loc 1 63 0
+ 166 0113 C9 F0 E0 FF             		movw	r8, #-32
+ 167 0117 AD F0                   		movw	ax, r8
+ 168 0119 BD F4                   		movw	r12, ax
+ 169 011b FA F4                   		movw	hl, r12
+ 170 011d 8B                      		mov	a, [hl]
+ 171 011e 9D F2                   		mov	r10, a
+ 172 0120 5A F2 7F                		and	r10, #127
+ 173 0123 AD F0                   		movw	ax, r8
+ 174 0125 DA F4                   		movw	bc, r12
+ 175 0127 8D F2                   		mov	a, r10
+ 176 0129 48 00 00                		mov	[bc], a
+  64:../src/r_cg_intc.c ****     PMK6 = 1U;    /* disable INTP6 operation */
+ 177                             		.loc 1 64 0
+ 178 012c C9 F0 D4 FF             		movw	r8, #-44
+ 179 0130 AD F0                   		movw	ax, r8
+ 180 0132 BD F4                   		movw	r12, ax
+ 181 0134 FA F4                   		movw	hl, r12
+ 182 0136 8B                      		mov	a, [hl]
+ 183 0137 9D F2                   		mov	r10, a
+ 184 0139 6A F2 08                		or	r10, #8
+ 185 013c AD F0                   		movw	ax, r8
+ 186 013e DA F4                   		movw	bc, r12
+ 187 0140 8D F2                   		mov	a, r10
+ 188 0142 48 00 00                		mov	[bc], a
+  65:../src/r_cg_intc.c ****     PIF6 = 0U;    /* clear INTP6 interrupt flag */
+ 189                             		.loc 1 65 0
+ 190 0145 C9 F0 D0 FF             		movw	r8, #-48
+ 191 0149 AD F0                   		movw	ax, r8
+ 192 014b BD F4                   		movw	r12, ax
+ 193 014d FA F4                   		movw	hl, r12
+ 194 014f 8B                      		mov	a, [hl]
+ 195 0150 9D F2                   		mov	r10, a
+ 196 0152 5A F2 F7                		and	r10, #-9
+ 197 0155 AD F0                   		movw	ax, r8
+ 198 0157 DA F4                   		movw	bc, r12
+ 199 0159 8D F2                   		mov	a, r10
+ 200 015b 48 00 00                		mov	[bc], a
+  66:../src/r_cg_intc.c ****     PMK7 = 1U;    /* disable INTP7 operation */
+ 201                             		.loc 1 66 0
+ 202 015e C9 F0 D4 FF             		movw	r8, #-44
+ 203 0162 AD F0                   		movw	ax, r8
+ 204 0164 BD F4                   		movw	r12, ax
+ 205 0166 FA F4                   		movw	hl, r12
+ 206 0168 8B                      		mov	a, [hl]
+ 207 0169 9D F2                   		mov	r10, a
+ 208 016b 6A F2 10                		or	r10, #16
+ 209 016e AD F0                   		movw	ax, r8
+ 210 0170 DA F4                   		movw	bc, r12
+ 211 0172 8D F2                   		mov	a, r10
+ 212 0174 48 00 00                		mov	[bc], a
+  67:../src/r_cg_intc.c ****     PIF7 = 0U;    /* clear INTP7 interrupt flag */
+ 213                             		.loc 1 67 0
+ 214 0177 C9 F0 D0 FF             		movw	r8, #-48
+ 215 017b AD F0                   		movw	ax, r8
+ 216 017d BD F4                   		movw	r12, ax
+ 217 017f FA F4                   		movw	hl, r12
+ 218 0181 8B                      		mov	a, [hl]
+ 219 0182 9D F2                   		mov	r10, a
+ 220 0184 5A F2 EF                		and	r10, #-17
+ 221 0187 AD F0                   		movw	ax, r8
+ 222 0189 DA F4                   		movw	bc, r12
+ 223 018b 8D F2                   		mov	a, r10
+ 224 018d 48 00 00                		mov	[bc], a
+  68:../src/r_cg_intc.c ****     PMK8 = 1U;    /* disable INTP8 operation */
+ 225                             		.loc 1 68 0
+ 226 0190 C9 F0 D4 FF             		movw	r8, #-44
+ 227 0194 AD F0                   		movw	ax, r8
+ 228 0196 BD F4                   		movw	r12, ax
+ 229 0198 FA F4                   		movw	hl, r12
+ 230 019a 8B                      		mov	a, [hl]
+ 231 019b 9D F2                   		mov	r10, a
+ 232 019d 6A F2 20                		or	r10, #32
+ 233 01a0 AD F0                   		movw	ax, r8
+ 234 01a2 DA F4                   		movw	bc, r12
+ 235 01a4 8D F2                   		mov	a, r10
+ 236 01a6 48 00 00                		mov	[bc], a
+  69:../src/r_cg_intc.c ****     PIF8 = 0U;    /* clear INTP8 interrupt flag */
+ 237                             		.loc 1 69 0
+ 238 01a9 C9 F0 D0 FF             		movw	r8, #-48
+ 239 01ad AD F0                   		movw	ax, r8
+ 240 01af BD F4                   		movw	r12, ax
+ 241 01b1 FA F4                   		movw	hl, r12
+ 242 01b3 8B                      		mov	a, [hl]
+ 243 01b4 9D F2                   		mov	r10, a
+ 244 01b6 5A F2 DF                		and	r10, #-33
+ 245 01b9 AD F0                   		movw	ax, r8
+ 246 01bb DA F4                   		movw	bc, r12
+ 247 01bd 8D F2                   		mov	a, r10
+ 248 01bf 48 00 00                		mov	[bc], a
+  70:../src/r_cg_intc.c ****     PMK9 = 1U;    /* disable INTP9 operation */
+ 249                             		.loc 1 70 0
+ 250 01c2 C9 F0 D4 FF             		movw	r8, #-44
+ 251 01c6 AD F0                   		movw	ax, r8
+ 252 01c8 BD F4                   		movw	r12, ax
+ 253 01ca FA F4                   		movw	hl, r12
+ 254 01cc 8B                      		mov	a, [hl]
+ 255 01cd 9D F2                   		mov	r10, a
+ 256 01cf 6A F2 40                		or	r10, #64
+ 257 01d2 AD F0                   		movw	ax, r8
+ 258 01d4 DA F4                   		movw	bc, r12
+ 259 01d6 8D F2                   		mov	a, r10
+ 260 01d8 48 00 00                		mov	[bc], a
+  71:../src/r_cg_intc.c ****     PIF9 = 0U;    /* clear INTP9 interrupt flag */
+ 261                             		.loc 1 71 0
+ 262 01db C9 F0 D0 FF             		movw	r8, #-48
+ 263 01df AD F0                   		movw	ax, r8
+ 264 01e1 BD F4                   		movw	r12, ax
+ 265 01e3 FA F4                   		movw	hl, r12
+ 266 01e5 8B                      		mov	a, [hl]
+ 267 01e6 9D F2                   		mov	r10, a
+ 268 01e8 5A F2 BF                		and	r10, #-65
+ 269 01eb AD F0                   		movw	ax, r8
+ 270 01ed DA F4                   		movw	bc, r12
+ 271 01ef 8D F2                   		mov	a, r10
+ 272 01f1 48 00 00                		mov	[bc], a
+  72:../src/r_cg_intc.c ****     PMK10 = 1U;    /* disable INTP10 operation */
+ 273                             		.loc 1 72 0
+ 274 01f4 C9 F0 D4 FF             		movw	r8, #-44
+ 275 01f8 AD F0                   		movw	ax, r8
+ 276 01fa BD F4                   		movw	r12, ax
+ 277 01fc FA F4                   		movw	hl, r12
+ 278 01fe 8B                      		mov	a, [hl]
+ 279 01ff 9D F2                   		mov	r10, a
+ 280 0201 6A F2 80                		or	r10, #-128
+ 281 0204 AD F0                   		movw	ax, r8
+ 282 0206 DA F4                   		movw	bc, r12
+ 283 0208 8D F2                   		mov	a, r10
+ 284 020a 48 00 00                		mov	[bc], a
+  73:../src/r_cg_intc.c ****     PIF10 = 0U;    /* clear INTP10 interrupt flag */
+ 285                             		.loc 1 73 0
+ 286 020d C9 F0 D0 FF             		movw	r8, #-48
+ 287 0211 AD F0                   		movw	ax, r8
+ 288 0213 BD F4                   		movw	r12, ax
+ 289 0215 FA F4                   		movw	hl, r12
+ 290 0217 8B                      		mov	a, [hl]
+ 291 0218 9D F2                   		mov	r10, a
+ 292 021a 5A F2 7F                		and	r10, #127
+ 293 021d AD F0                   		movw	ax, r8
+ 294 021f DA F4                   		movw	bc, r12
+ 295 0221 8D F2                   		mov	a, r10
+ 296 0223 48 00 00                		mov	[bc], a
+  74:../src/r_cg_intc.c ****     PMK11 = 1U;    /* disable INTP11 operation */
+ 297                             		.loc 1 74 0
+ 298 0226 C9 F0 D5 FF             		movw	r8, #-43
+ 299 022a AD F0                   		movw	ax, r8
+ 300 022c BD F4                   		movw	r12, ax
+ 301 022e FA F4                   		movw	hl, r12
+ 302 0230 8B                      		mov	a, [hl]
+ 303 0231 9D F2                   		mov	r10, a
+ 304 0233 6A F2 01                		or	r10, #1
+ 305 0236 AD F0                   		movw	ax, r8
+ 306 0238 DA F4                   		movw	bc, r12
+ 307 023a 8D F2                   		mov	a, r10
+ 308 023c 48 00 00                		mov	[bc], a
+  75:../src/r_cg_intc.c ****     PIF11 = 0U;    /* clear INTP11 interrupt flag */
+ 309                             		.loc 1 75 0
+ 310 023f C9 F0 D1 FF             		movw	r8, #-47
+ 311 0243 AD F0                   		movw	ax, r8
+ 312 0245 BD F4                   		movw	r12, ax
+ 313 0247 FA F4                   		movw	hl, r12
+ 314 0249 8B                      		mov	a, [hl]
+ 315 024a 9D F2                   		mov	r10, a
+ 316 024c 5A F2 FE                		and	r10, #-2
+ 317 024f AD F0                   		movw	ax, r8
+ 318 0251 DA F4                   		movw	bc, r12
+ 319 0253 8D F2                   		mov	a, r10
+ 320 0255 48 00 00                		mov	[bc], a
+  76:../src/r_cg_intc.c ****     /* Set INTP8 low priority */
+  77:../src/r_cg_intc.c ****     PPR18 = 1U;
+ 321                             		.loc 1 77 0
+ 322 0258 C9 F0 DC FF             		movw	r8, #-36
+ 323 025c AD F0                   		movw	ax, r8
+ 324 025e BD F4                   		movw	r12, ax
+ 325 0260 FA F4                   		movw	hl, r12
+ 326 0262 8B                      		mov	a, [hl]
+ 327 0263 9D F2                   		mov	r10, a
+ 328 0265 6A F2 20                		or	r10, #32
+ 329 0268 AD F0                   		movw	ax, r8
+ 330 026a DA F4                   		movw	bc, r12
+ 331 026c 8D F2                   		mov	a, r10
+ 332 026e 48 00 00                		mov	[bc], a
+  78:../src/r_cg_intc.c ****     PPR08 = 1U;
+ 333                             		.loc 1 78 0
+ 334 0271 C9 F0 D8 FF             		movw	r8, #-40
+ 335 0275 AD F0                   		movw	ax, r8
+ 336 0277 BD F4                   		movw	r12, ax
+ 337 0279 FA F4                   		movw	hl, r12
+ 338 027b 8B                      		mov	a, [hl]
+ 339 027c 9D F2                   		mov	r10, a
+ 340 027e 6A F2 20                		or	r10, #32
+ 341 0281 AD F0                   		movw	ax, r8
+ 342 0283 DA F4                   		movw	bc, r12
+ 343 0285 8D F2                   		mov	a, r10
+ 344 0287 48 00 00                		mov	[bc], a
+  79:../src/r_cg_intc.c ****     /* Set INTP9 low priority */
+  80:../src/r_cg_intc.c ****     PPR19 = 1U;
+ 345                             		.loc 1 80 0
+ 346 028a C9 F0 DC FF             		movw	r8, #-36
+ 347 028e AD F0                   		movw	ax, r8
+ 348 0290 BD F4                   		movw	r12, ax
+ 349 0292 FA F4                   		movw	hl, r12
+ 350 0294 8B                      		mov	a, [hl]
+ 351 0295 9D F2                   		mov	r10, a
+ 352 0297 6A F2 40                		or	r10, #64
+ 353 029a AD F0                   		movw	ax, r8
+ 354 029c DA F4                   		movw	bc, r12
+ 355 029e 8D F2                   		mov	a, r10
+ 356 02a0 48 00 00                		mov	[bc], a
+  81:../src/r_cg_intc.c ****     PPR09 = 1U;
+ 357                             		.loc 1 81 0
+ 358 02a3 C9 F0 D8 FF             		movw	r8, #-40
+ 359 02a7 AD F0                   		movw	ax, r8
+ 360 02a9 BD F4                   		movw	r12, ax
+ 361 02ab FA F4                   		movw	hl, r12
+ 362 02ad 8B                      		mov	a, [hl]
+ 363 02ae 9D F2                   		mov	r10, a
+ 364 02b0 6A F2 40                		or	r10, #64
+ 365 02b3 AD F0                   		movw	ax, r8
+ 366 02b5 DA F4                   		movw	bc, r12
+ 367 02b7 8D F2                   		mov	a, r10
+ 368 02b9 48 00 00                		mov	[bc], a
+  82:../src/r_cg_intc.c ****     /* Set INTP10 low priority */
+  83:../src/r_cg_intc.c ****     PPR110 = 1U;
+ 369                             		.loc 1 83 0
+ 370 02bc C9 F0 DC FF             		movw	r8, #-36
+ 371 02c0 AD F0                   		movw	ax, r8
+ 372 02c2 BD F4                   		movw	r12, ax
+ 373 02c4 FA F4                   		movw	hl, r12
+ 374 02c6 8B                      		mov	a, [hl]
+ 375 02c7 9D F2                   		mov	r10, a
+ 376 02c9 6A F2 80                		or	r10, #-128
+ 377 02cc AD F0                   		movw	ax, r8
+ 378 02ce DA F4                   		movw	bc, r12
+ 379 02d0 8D F2                   		mov	a, r10
+ 380 02d2 48 00 00                		mov	[bc], a
+  84:../src/r_cg_intc.c ****     PPR010 = 1U;
+ 381                             		.loc 1 84 0
+ 382 02d5 C9 F0 D8 FF             		movw	r8, #-40
+ 383 02d9 AD F0                   		movw	ax, r8
+ 384 02db BD F4                   		movw	r12, ax
+ 385 02dd FA F4                   		movw	hl, r12
+ 386 02df 8B                      		mov	a, [hl]
+ 387 02e0 9D F2                   		mov	r10, a
+ 388 02e2 6A F2 80                		or	r10, #-128
+ 389 02e5 AD F0                   		movw	ax, r8
+ 390 02e7 DA F4                   		movw	bc, r12
+ 391 02e9 8D F2                   		mov	a, r10
+ 392 02eb 48 00 00                		mov	[bc], a
+  85:../src/r_cg_intc.c ****     EGN1 = _01_INTP8_EDGE_FALLING_SEL | _02_INTP9_EDGE_FALLING_SEL | _04_INTP10_EDGE_FALLING_SEL;
+ 393                             		.loc 1 85 0
+ 394 02ee C9 F0 3B FF             		movw	r8, #-197
+ 395 02f2 AD F0                   		movw	ax, r8
+ 396 02f4 BD F2                   		movw	r10, ax
+ 397 02f6 DA F2                   		movw	bc, r10
+ 398 02f8 51 07                   		mov	a, #7
+ 399 02fa 48 00 00                		mov	[bc], a
+  86:../src/r_cg_intc.c ****     /* Set INTP8 pin */
+  87:../src/r_cg_intc.c ****     PM7 |= 0x10U;
+ 400                             		.loc 1 87 0
+ 401 02fd C9 F2 27 FF             		movw	r10, #-217
+ 402 0301 C9 F0 27 FF             		movw	r8, #-217
+ 403 0305 AD F0                   		movw	ax, r8
+ 404 0307 BD F4                   		movw	r12, ax
+ 405 0309 FA F4                   		movw	hl, r12
+ 406 030b 8B                      		mov	a, [hl]
+ 407 030c 9D F0                   		mov	r8, a
+ 408 030e 6A F0 10                		or	r8, #16
+ 409 0311 AD F2                   		movw	ax, r10
+ 410 0313 BD F4                   		movw	r12, ax
+ 411 0315 DA F4                   		movw	bc, r12
+ 412 0317 8D F0                   		mov	a, r8
+ 413 0319 48 00 00                		mov	[bc], a
+  88:../src/r_cg_intc.c ****     /* Set INTP9 pin */
+  89:../src/r_cg_intc.c ****     PM7 |= 0x20U;
+ 414                             		.loc 1 89 0
+ 415 031c C9 F2 27 FF             		movw	r10, #-217
+ 416 0320 C9 F0 27 FF             		movw	r8, #-217
+ 417 0324 AD F0                   		movw	ax, r8
+ 418 0326 BD F4                   		movw	r12, ax
+ 419 0328 FA F4                   		movw	hl, r12
+ 420 032a 8B                      		mov	a, [hl]
+ 421 032b 9D F0                   		mov	r8, a
+ 422 032d 6A F0 20                		or	r8, #32
+ 423 0330 AD F2                   		movw	ax, r10
+ 424 0332 BD F4                   		movw	r12, ax
+ 425 0334 DA F4                   		movw	bc, r12
+ 426 0336 8D F0                   		mov	a, r8
+ 427 0338 48 00 00                		mov	[bc], a
+  90:../src/r_cg_intc.c ****     /* Set INTP10 pin */
+  91:../src/r_cg_intc.c ****     PM7 |= 0x40U;
+ 428                             		.loc 1 91 0
+ 429 033b C9 F2 27 FF             		movw	r10, #-217
+ 430 033f C9 F0 27 FF             		movw	r8, #-217
+ 431 0343 AD F0                   		movw	ax, r8
+ 432 0345 BD F4                   		movw	r12, ax
+ 433 0347 FA F4                   		movw	hl, r12
+ 434 0349 8B                      		mov	a, [hl]
+ 435 034a 9D F0                   		mov	r8, a
+ 436 034c 6A F0 40                		or	r8, #64
+ 437 034f AD F2                   		movw	ax, r10
+ 438 0351 BD F4                   		movw	r12, ax
+ 439 0353 DA F4                   		movw	bc, r12
+ 440 0355 8D F0                   		mov	a, r8
+ 441 0357 48 00 00                		mov	[bc], a
+  92:../src/r_cg_intc.c **** }
+ 442                             		.loc 1 92 0
+ 443 035a D7                      		ret
+ 444                             	.LFE0:
+ 446                             		.global	_R_INTC8_Start
+ 448                             	_R_INTC8_Start:
+ 449                             	.LFB1:
+  93:../src/r_cg_intc.c **** 
+  94:../src/r_cg_intc.c **** /**************************************************************************************************
+  95:../src/r_cg_intc.c **** * Function Name: R_INTC8_Start
+  96:../src/r_cg_intc.c **** * Description  : This function clears INTP8 interrupt flag and enables interrupt.
+  97:../src/r_cg_intc.c **** * Arguments    : None
+  98:../src/r_cg_intc.c **** * Return Value : None
+  99:../src/r_cg_intc.c **** ***************************************************************************************************
+ 100:../src/r_cg_intc.c **** void R_INTC8_Start(void)
+ 101:../src/r_cg_intc.c **** {
+ 450                             		.loc 1 101 0
+ 102:../src/r_cg_intc.c ****     PIF8 = 0U;    /* clear INTP8 interrupt flag */
+ 451                             		.loc 1 102 0
+ 452 035b C9 F0 D0 FF             		movw	r8, #-48
+ 453 035f AD F0                   		movw	ax, r8
+ 454 0361 BD F4                   		movw	r12, ax
+ 455 0363 FA F4                   		movw	hl, r12
+ 456 0365 8B                      		mov	a, [hl]
+ 457 0366 9D F2                   		mov	r10, a
+ 458 0368 5A F2 DF                		and	r10, #-33
+ 459 036b AD F0                   		movw	ax, r8
+ 460 036d DA F4                   		movw	bc, r12
+ 461 036f 8D F2                   		mov	a, r10
+ 462 0371 48 00 00                		mov	[bc], a
+ 103:../src/r_cg_intc.c ****     PMK8 = 0U;    /* enable INTP8 interrupt */
+ 463                             		.loc 1 103 0
+ 464 0374 C9 F0 D4 FF             		movw	r8, #-44
+ 465 0378 AD F0                   		movw	ax, r8
+ 466 037a BD F4                   		movw	r12, ax
+ 467 037c FA F4                   		movw	hl, r12
+ 468 037e 8B                      		mov	a, [hl]
+ 469 037f 9D F2                   		mov	r10, a
+ 470 0381 5A F2 DF                		and	r10, #-33
+ 471 0384 AD F0                   		movw	ax, r8
+ 472 0386 DA F4                   		movw	bc, r12
+ 473 0388 8D F2                   		mov	a, r10
+ 474 038a 48 00 00                		mov	[bc], a
+ 104:../src/r_cg_intc.c **** }
+ 475                             		.loc 1 104 0
+ 476 038d D7                      		ret
+ 477                             	.LFE1:
+ 479                             		.global	_R_INTC8_Stop
+ 481                             	_R_INTC8_Stop:
+ 482                             	.LFB2:
+ 105:../src/r_cg_intc.c **** 
+ 106:../src/r_cg_intc.c **** /**************************************************************************************************
+ 107:../src/r_cg_intc.c **** * Function Name: R_INTC8_Stop
+ 108:../src/r_cg_intc.c **** * Description  : This function disables INTP8 interrupt and clears interrupt flag.
+ 109:../src/r_cg_intc.c **** * Arguments    : None
+ 110:../src/r_cg_intc.c **** * Return Value : None
+ 111:../src/r_cg_intc.c **** ***************************************************************************************************
+ 112:../src/r_cg_intc.c **** void R_INTC8_Stop(void)
+ 113:../src/r_cg_intc.c **** {
+ 483                             		.loc 1 113 0
+ 114:../src/r_cg_intc.c ****     PMK8 = 1U;    /* disable INTP8 interrupt */
+ 484                             		.loc 1 114 0
+ 485 038e C9 F0 D4 FF             		movw	r8, #-44
+ 486 0392 AD F0                   		movw	ax, r8
+ 487 0394 BD F4                   		movw	r12, ax
+ 488 0396 FA F4                   		movw	hl, r12
+ 489 0398 8B                      		mov	a, [hl]
+ 490 0399 9D F2                   		mov	r10, a
+ 491 039b 6A F2 20                		or	r10, #32
+ 492 039e AD F0                   		movw	ax, r8
+ 493 03a0 DA F4                   		movw	bc, r12
+ 494 03a2 8D F2                   		mov	a, r10
+ 495 03a4 48 00 00                		mov	[bc], a
+ 115:../src/r_cg_intc.c ****     PIF8 = 0U;    /* clear INTP8 interrupt flag */
+ 496                             		.loc 1 115 0
+ 497 03a7 C9 F0 D0 FF             		movw	r8, #-48
+ 498 03ab AD F0                   		movw	ax, r8
+ 499 03ad BD F4                   		movw	r12, ax
+ 500 03af FA F4                   		movw	hl, r12
+ 501 03b1 8B                      		mov	a, [hl]
+ 502 03b2 9D F2                   		mov	r10, a
+ 503 03b4 5A F2 DF                		and	r10, #-33
+ 504 03b7 AD F0                   		movw	ax, r8
+ 505 03b9 DA F4                   		movw	bc, r12
+ 506 03bb 8D F2                   		mov	a, r10
+ 507 03bd 48 00 00                		mov	[bc], a
+ 116:../src/r_cg_intc.c **** }
+ 508                             		.loc 1 116 0
+ 509 03c0 D7                      		ret
+ 510                             	.LFE2:
+ 512                             		.global	_R_INTC9_Start
+ 514                             	_R_INTC9_Start:
+ 515                             	.LFB3:
+ 117:../src/r_cg_intc.c **** 
+ 118:../src/r_cg_intc.c **** /**************************************************************************************************
+ 119:../src/r_cg_intc.c **** * Function Name: R_INTC9_Start
+ 120:../src/r_cg_intc.c **** * Description  : This function clears INTP9 interrupt flag and enables interrupt.
+ 121:../src/r_cg_intc.c **** * Arguments    : None
+ 122:../src/r_cg_intc.c **** * Return Value : None
+ 123:../src/r_cg_intc.c **** ***************************************************************************************************
+ 124:../src/r_cg_intc.c **** void R_INTC9_Start(void)
+ 125:../src/r_cg_intc.c **** {
+ 516                             		.loc 1 125 0
+ 126:../src/r_cg_intc.c ****     PIF9 = 0U;    /* clear INTP9 interrupt flag */
+ 517                             		.loc 1 126 0
+ 518 03c1 C9 F0 D0 FF             		movw	r8, #-48
+ 519 03c5 AD F0                   		movw	ax, r8
+ 520 03c7 BD F4                   		movw	r12, ax
+ 521 03c9 FA F4                   		movw	hl, r12
+ 522 03cb 8B                      		mov	a, [hl]
+ 523 03cc 9D F2                   		mov	r10, a
+ 524 03ce 5A F2 BF                		and	r10, #-65
+ 525 03d1 AD F0                   		movw	ax, r8
+ 526 03d3 DA F4                   		movw	bc, r12
+ 527 03d5 8D F2                   		mov	a, r10
+ 528 03d7 48 00 00                		mov	[bc], a
+ 127:../src/r_cg_intc.c ****     PMK9 = 0U;    /* enable INTP9 interrupt */
+ 529                             		.loc 1 127 0
+ 530 03da C9 F0 D4 FF             		movw	r8, #-44
+ 531 03de AD F0                   		movw	ax, r8
+ 532 03e0 BD F4                   		movw	r12, ax
+ 533 03e2 FA F4                   		movw	hl, r12
+ 534 03e4 8B                      		mov	a, [hl]
+ 535 03e5 9D F2                   		mov	r10, a
+ 536 03e7 5A F2 BF                		and	r10, #-65
+ 537 03ea AD F0                   		movw	ax, r8
+ 538 03ec DA F4                   		movw	bc, r12
+ 539 03ee 8D F2                   		mov	a, r10
+ 540 03f0 48 00 00                		mov	[bc], a
+ 128:../src/r_cg_intc.c **** }
+ 541                             		.loc 1 128 0
+ 542 03f3 D7                      		ret
+ 543                             	.LFE3:
+ 545                             		.global	_R_INTC9_Stop
+ 547                             	_R_INTC9_Stop:
+ 548                             	.LFB4:
+ 129:../src/r_cg_intc.c **** 
+ 130:../src/r_cg_intc.c **** /**************************************************************************************************
+ 131:../src/r_cg_intc.c **** * Function Name: R_INTC9_Stop
+ 132:../src/r_cg_intc.c **** * Description  : This function disables INTP9 interrupt and clears interrupt flag.
+ 133:../src/r_cg_intc.c **** * Arguments    : None
+ 134:../src/r_cg_intc.c **** * Return Value : None
+ 135:../src/r_cg_intc.c **** ***************************************************************************************************
+ 136:../src/r_cg_intc.c **** void R_INTC9_Stop(void)
+ 137:../src/r_cg_intc.c **** {
+ 549                             		.loc 1 137 0
+ 138:../src/r_cg_intc.c ****     PMK9 = 1U;    /* disable INTP9 interrupt */
+ 550                             		.loc 1 138 0
+ 551 03f4 C9 F0 D4 FF             		movw	r8, #-44
+ 552 03f8 AD F0                   		movw	ax, r8
+ 553 03fa BD F4                   		movw	r12, ax
+ 554 03fc FA F4                   		movw	hl, r12
+ 555 03fe 8B                      		mov	a, [hl]
+ 556 03ff 9D F2                   		mov	r10, a
+ 557 0401 6A F2 40                		or	r10, #64
+ 558 0404 AD F0                   		movw	ax, r8
+ 559 0406 DA F4                   		movw	bc, r12
+ 560 0408 8D F2                   		mov	a, r10
+ 561 040a 48 00 00                		mov	[bc], a
+ 139:../src/r_cg_intc.c ****     PIF9 = 0U;    /* clear INTP9 interrupt flag */
+ 562                             		.loc 1 139 0
+ 563 040d C9 F0 D0 FF             		movw	r8, #-48
+ 564 0411 AD F0                   		movw	ax, r8
+ 565 0413 BD F4                   		movw	r12, ax
+ 566 0415 FA F4                   		movw	hl, r12
+ 567 0417 8B                      		mov	a, [hl]
+ 568 0418 9D F2                   		mov	r10, a
+ 569 041a 5A F2 BF                		and	r10, #-65
+ 570 041d AD F0                   		movw	ax, r8
+ 571 041f DA F4                   		movw	bc, r12
+ 572 0421 8D F2                   		mov	a, r10
+ 573 0423 48 00 00                		mov	[bc], a
+ 140:../src/r_cg_intc.c **** }
+ 574                             		.loc 1 140 0
+ 575 0426 D7                      		ret
+ 576                             	.LFE4:
+ 578                             		.global	_R_INTC10_Start
+ 580                             	_R_INTC10_Start:
+ 581                             	.LFB5:
+ 141:../src/r_cg_intc.c **** 
+ 142:../src/r_cg_intc.c **** /**************************************************************************************************
+ 143:../src/r_cg_intc.c **** * Function Name: R_INTC10_Start
+ 144:../src/r_cg_intc.c **** * Description  : This function clears INTP10 interrupt flag and enables interrupt.
+ 145:../src/r_cg_intc.c **** * Arguments    : None
+ 146:../src/r_cg_intc.c **** * Return Value : None
+ 147:../src/r_cg_intc.c **** ***************************************************************************************************
+ 148:../src/r_cg_intc.c **** void R_INTC10_Start(void)
+ 149:../src/r_cg_intc.c **** {
+ 582                             		.loc 1 149 0
+ 150:../src/r_cg_intc.c ****     PIF10 = 0U;    /* clear INTP10 interrupt flag */
+ 583                             		.loc 1 150 0
+ 584 0427 C9 F0 D0 FF             		movw	r8, #-48
+ 585 042b AD F0                   		movw	ax, r8
+ 586 042d BD F4                   		movw	r12, ax
+ 587 042f FA F4                   		movw	hl, r12
+ 588 0431 8B                      		mov	a, [hl]
+ 589 0432 9D F2                   		mov	r10, a
+ 590 0434 5A F2 7F                		and	r10, #127
+ 591 0437 AD F0                   		movw	ax, r8
+ 592 0439 DA F4                   		movw	bc, r12
+ 593 043b 8D F2                   		mov	a, r10
+ 594 043d 48 00 00                		mov	[bc], a
+ 151:../src/r_cg_intc.c ****     PMK10 = 0U;    /* enable INTP10 interrupt */
+ 595                             		.loc 1 151 0
+ 596 0440 C9 F0 D4 FF             		movw	r8, #-44
+ 597 0444 AD F0                   		movw	ax, r8
+ 598 0446 BD F4                   		movw	r12, ax
+ 599 0448 FA F4                   		movw	hl, r12
+ 600 044a 8B                      		mov	a, [hl]
+ 601 044b 9D F2                   		mov	r10, a
+ 602 044d 5A F2 7F                		and	r10, #127
+ 603 0450 AD F0                   		movw	ax, r8
+ 604 0452 DA F4                   		movw	bc, r12
+ 605 0454 8D F2                   		mov	a, r10
+ 606 0456 48 00 00                		mov	[bc], a
+ 152:../src/r_cg_intc.c **** }
+ 607                             		.loc 1 152 0
+ 608 0459 D7                      		ret
+ 609                             	.LFE5:
+ 611                             		.global	_R_INTC10_Stop
+ 613                             	_R_INTC10_Stop:
+ 614                             	.LFB6:
+ 153:../src/r_cg_intc.c **** 
+ 154:../src/r_cg_intc.c **** /**************************************************************************************************
+ 155:../src/r_cg_intc.c **** * Function Name: R_INTC10_Stop
+ 156:../src/r_cg_intc.c **** * Description  : This function disables INTP10 interrupt and clears interrupt flag.
+ 157:../src/r_cg_intc.c **** * Arguments    : None
+ 158:../src/r_cg_intc.c **** * Return Value : None
+ 159:../src/r_cg_intc.c **** ***************************************************************************************************
+ 160:../src/r_cg_intc.c **** void R_INTC10_Stop(void)
+ 161:../src/r_cg_intc.c **** {
+ 615                             		.loc 1 161 0
+ 162:../src/r_cg_intc.c ****     PMK10 = 1U;    /* disable INTP10 interrupt */
+ 616                             		.loc 1 162 0
+ 617 045a C9 F0 D4 FF             		movw	r8, #-44
+ 618 045e AD F0                   		movw	ax, r8
+ 619 0460 BD F4                   		movw	r12, ax
+ 620 0462 FA F4                   		movw	hl, r12
+ 621 0464 8B                      		mov	a, [hl]
+ 622 0465 9D F2                   		mov	r10, a
+ 623 0467 6A F2 80                		or	r10, #-128
+ 624 046a AD F0                   		movw	ax, r8
+ 625 046c DA F4                   		movw	bc, r12
+ 626 046e 8D F2                   		mov	a, r10
+ 627 0470 48 00 00                		mov	[bc], a
+ 163:../src/r_cg_intc.c ****     PIF10 = 0U;    /* clear INTP10 interrupt flag */
+ 628                             		.loc 1 163 0
+ 629 0473 C9 F0 D0 FF             		movw	r8, #-48
+ 630 0477 AD F0                   		movw	ax, r8
+ 631 0479 BD F4                   		movw	r12, ax
+ 632 047b FA F4                   		movw	hl, r12
+ 633 047d 8B                      		mov	a, [hl]
+ 634 047e 9D F2                   		mov	r10, a
+ 635 0480 5A F2 7F                		and	r10, #127
+ 636 0483 AD F0                   		movw	ax, r8
+ 637 0485 DA F4                   		movw	bc, r12
+ 638 0487 8D F2                   		mov	a, r10
+ 639 0489 48 00 00                		mov	[bc], a
+ 164:../src/r_cg_intc.c **** }
+ 640                             		.loc 1 164 0
+ 641 048c D7                      		ret
+ 642                             	.LFE6:
+ 718                             	.Letext0:
+ 719                             		.file 2 "../src/iodefine.h"

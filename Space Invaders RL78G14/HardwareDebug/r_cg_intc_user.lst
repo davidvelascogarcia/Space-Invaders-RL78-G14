@@ -1,0 +1,445 @@
+   1                             	r8	=	0xffef0
+   2                             	r16	=	0xffee8
+   3                             	r24	=	0xffee0
+   4                             	r9	=	0xffef1
+   5                             	r17	=	0xffee9
+   6                             	r25	=	0xffee1
+   7                             	r10	=	0xffef2
+   8                             	r18	=	0xffeea
+   9                             	r26	=	0xffee2
+  10                             	r11	=	0xffef3
+  11                             	r19	=	0xffeeb
+  12                             	r27	=	0xffee3
+  13                             	r12	=	0xffef4
+  14                             	r20	=	0xffeec
+  15                             	r28	=	0xffee4
+  16                             	r13	=	0xffef5
+  17                             	r21	=	0xffeed
+  18                             	r29	=	0xffee5
+  19                             	r14	=	0xffef6
+  20                             	r22	=	0xffeee
+  21                             	r30	=	0xffee6
+  22                             	r15	=	0xffef7
+  23                             	r23	=	0xffeef
+  24                             	r31	=	0xffee7
+  25                             	.text
+  26                             	.Ltext0:
+  27                             		.global	_start
+  28                             	.bss
+  31                             	_start:
+  32 0000 00                      		.zero	1
+  33                             		.global	_desplazar
+  34                             	.data
+  37                             	_desplazar:
+  38 0000 02                      		.byte	2
+  39                             		.comm	_canon,1,1
+  40                             		.global	_disparo
+  43                             	_disparo:
+  44 0001 FF                      		.byte	-1
+  45                             		.comm	_copia_canon,1,1
+  46                             	.text
+  47                             		.global	_r_intc8_interrupt
+  49                             	_r_intc8_interrupt:
+  50                             	.LFB0:
+  51                             		.file 1 "../src/r_cg_intc_user.c"
+   1:../src/r_cg_intc_user.c **** /**************************************************************************************************
+   2:../src/r_cg_intc_user.c **** * DISCLAIMER
+   3:../src/r_cg_intc_user.c **** * This software is supplied by Renesas Electronics Corporation and is only intended for use with Re
+   4:../src/r_cg_intc_user.c **** * No other uses are authorized. This software is owned by Renesas Electronics Corporation and is pr
+   5:../src/r_cg_intc_user.c **** * applicable laws, including copyright laws. 
+   6:../src/r_cg_intc_user.c **** * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIESREGARDING THIS SOFTWARE, WHETHER
+   7:../src/r_cg_intc_user.c **** * OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULA
+   8:../src/r_cg_intc_user.c **** * NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.TO THE MAXIMUM EXTENT PERMITTED N
+   9:../src/r_cg_intc_user.c **** * LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE 
+  10:../src/r_cg_intc_user.c **** * INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS SOFTWARE, E
+  11:../src/r_cg_intc_user.c **** * ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  12:../src/r_cg_intc_user.c **** * Renesas reserves the right, without notice, to make changes to this software and to discontinue t
+  13:../src/r_cg_intc_user.c **** * of this software. By using this software, you agree to the additional terms and conditions found 
+  14:../src/r_cg_intc_user.c **** * following link:
+  15:../src/r_cg_intc_user.c **** * http://www.renesas.com/disclaimer
+  16:../src/r_cg_intc_user.c **** *
+  17:../src/r_cg_intc_user.c **** * Copyright (C) 2011, 2015 Renesas Electronics Corporation. All rights reserved.
+  18:../src/r_cg_intc_user.c **** ***************************************************************************************************
+  19:../src/r_cg_intc_user.c **** 
+  20:../src/r_cg_intc_user.c **** /**************************************************************************************************
+  21:../src/r_cg_intc_user.c **** * File Name    : r_cg_intc_user.c
+  22:../src/r_cg_intc_user.c **** * Version      : CodeGenerator for RL78/G14 V2.04.02.01 [15 May 2015]
+  23:../src/r_cg_intc_user.c **** * Device(s)    : R5F104PF
+  24:../src/r_cg_intc_user.c **** * Tool-Chain   : GCCRL78
+  25:../src/r_cg_intc_user.c **** * Description  : This file implements device driver for INTC module.
+  26:../src/r_cg_intc_user.c **** * Creation Date: 28/04/2017
+  27:../src/r_cg_intc_user.c **** ***************************************************************************************************
+  28:../src/r_cg_intc_user.c **** 
+  29:../src/r_cg_intc_user.c **** /**************************************************************************************************
+  30:../src/r_cg_intc_user.c **** Includes
+  31:../src/r_cg_intc_user.c **** ***************************************************************************************************
+  32:../src/r_cg_intc_user.c **** #include "r_cg_macrodriver.h"
+  33:../src/r_cg_intc_user.c **** #include "r_cg_intc.h"
+  34:../src/r_cg_intc_user.c **** /* Start user code for include. Do not edit comment generated here */
+  35:../src/r_cg_intc_user.c **** /* End user code. Do not edit comment generated here */
+  36:../src/r_cg_intc_user.c **** #include "r_cg_userdefine.h"
+  37:../src/r_cg_intc_user.c **** 
+  38:../src/r_cg_intc_user.c **** /**************************************************************************************************
+  39:../src/r_cg_intc_user.c **** Global variables and functions
+  40:../src/r_cg_intc_user.c **** ***************************************************************************************************
+  41:../src/r_cg_intc_user.c **** /* Start user code for global. Do not edit comment generated here */
+  42:../src/r_cg_intc_user.c **** unsigned char start=0;
+  43:../src/r_cg_intc_user.c **** signed char desplazar=2;
+  44:../src/r_cg_intc_user.c **** unsigned char canon;
+  45:../src/r_cg_intc_user.c **** signed char disparo=-1;
+  46:../src/r_cg_intc_user.c **** unsigned char copia_canon;
+  47:../src/r_cg_intc_user.c **** extern unsigned char mov_canon;
+  48:../src/r_cg_intc_user.c **** /* End user code. Do not edit comment generated here */
+  49:../src/r_cg_intc_user.c **** 
+  50:../src/r_cg_intc_user.c **** /**************************************************************************************************
+  51:../src/r_cg_intc_user.c **** * Function Name: r_intc8_interrupt
+  52:../src/r_cg_intc_user.c **** * Description  : This function is INTP8 interrupt service routine.
+  53:../src/r_cg_intc_user.c **** * Arguments    : None
+  54:../src/r_cg_intc_user.c **** * Return Value : None
+  55:../src/r_cg_intc_user.c **** ***************************************************************************************************
+  56:../src/r_cg_intc_user.c **** void r_intc8_interrupt(void)
+  57:../src/r_cg_intc_user.c **** {
+  52                             		.loc 1 57 0
+  53                             		; start of function
+  54                             		; push 10: ax bc de hl r8
+  55 0000 61 CF                   		sel	rb0
+  56 0002 C1                      		push	ax
+  57                             	.LCFI0:
+  58 0003 C3                      		push	bc
+  59                             	.LCFI1:
+  60 0004 C5                      		push	de
+  61                             	.LCFI2:
+  62 0005 C7                      		push	hl
+  63                             	.LCFI3:
+  64 0006 61 DF                   		sel	rb1
+  65 0008 C1                      		push	ax ; r8
+  66                             	.LCFI4:
+  67 0009 61 CF                   		sel	rb0
+  58:../src/r_cg_intc_user.c ****     /* Start user code. Do not edit comment generated here */
+  59:../src/r_cg_intc_user.c **** 
+  60:../src/r_cg_intc_user.c **** 	desplazar ++;
+  68                             		.loc 1 60 0
+  69 000b 8F 00 00                		mov	a, !_desplazar
+  70 000e 9D F0                   		mov	r8, a
+  71 0010 A4 F0                   		inc	r8
+  72 0012 8D F0                   		mov	a, r8
+  73 0014 9F 00 00                		mov	!_desplazar, a
+  61:../src/r_cg_intc_user.c **** 	if(desplazar < 4){
+  74                             		.loc 1 61 0
+  75 0017 9D F0                   		mov	r8, a
+  76 0019 4C 03                   		cmp	a, #3
+  77 001b 71 FF                   		 xor1	CY, a.7
+  78 001d 61 F3                   		 sknh
+  79 001f EC 33 00 00             		 br	!!.L2
+  62:../src/r_cg_intc_user.c **** 		mov_canon<<=1;
+  80                             		.loc 1 62 0
+  81 0023 8F 00 00                		mov	a, !_mov_canon
+  82 0026 9D F0                   		mov	r8, a
+  83 0028 61 01                   		add	a, a
+  84 002a 9D F0                   		mov	r8, a
+  85 002c 9F 00 00                		mov	!_mov_canon, a
+  86 002f EC 3D 00 00             		br	!!.L1
+  87                             	.L2:
+  63:../src/r_cg_intc_user.c **** 	}else{
+  64:../src/r_cg_intc_user.c **** 		desplazar=4;
+  88                             		.loc 1 64 0
+  89 0033 51 04                   		mov	a, #4
+  90 0035 9F 00 00                		mov	!_desplazar, a
+  65:../src/r_cg_intc_user.c **** 		mov_canon=0b10000;
+  91                             		.loc 1 65 0
+  92 0038 51 10                   		mov	a, #16
+  93 003a 9F 00 00                		mov	!_mov_canon, a
+  94                             	.L1:
+  66:../src/r_cg_intc_user.c **** 	}
+  67:../src/r_cg_intc_user.c ****     /* End user code. Do not edit comment generated here */
+  68:../src/r_cg_intc_user.c **** }
+  95                             		.loc 1 68 0
+  96 003d 61 DF                   		sel	rb1
+  97 003f C0                      		pop	ax ; r8
+  98 0040 61 CF                   		sel	rb0
+  99 0042 C6                      		pop	hl
+ 100 0043 C4                      		pop	de
+ 101 0044 C2                      		pop	bc
+ 102 0045 C0                      		pop	ax
+ 103 0046 61 FC                   		reti
+ 104                             	.LFE0:
+ 106                             		.global	_r_intc9_interrupt
+ 108                             	_r_intc9_interrupt:
+ 109                             	.LFB1:
+  69:../src/r_cg_intc_user.c **** 
+  70:../src/r_cg_intc_user.c **** /**************************************************************************************************
+  71:../src/r_cg_intc_user.c **** * Function Name: r_intc9_interrupt
+  72:../src/r_cg_intc_user.c **** * Description  : This function is INTP9 interrupt service routine.
+  73:../src/r_cg_intc_user.c **** * Arguments    : None
+  74:../src/r_cg_intc_user.c **** * Return Value : None
+  75:../src/r_cg_intc_user.c **** ***************************************************************************************************
+  76:../src/r_cg_intc_user.c **** void r_intc9_interrupt(void)
+  77:../src/r_cg_intc_user.c **** {
+ 110                             		.loc 1 77 0
+ 111                             		; start of function
+ 112                             		; push 10: ax bc de hl r8
+ 113 0048 61 CF                   		sel	rb0
+ 114 004a C1                      		push	ax
+ 115                             	.LCFI5:
+ 116 004b C3                      		push	bc
+ 117                             	.LCFI6:
+ 118 004c C5                      		push	de
+ 119                             	.LCFI7:
+ 120 004d C7                      		push	hl
+ 121                             	.LCFI8:
+ 122 004e 61 DF                   		sel	rb1
+ 123 0050 C1                      		push	ax ; r8
+ 124                             	.LCFI9:
+ 125 0051 61 CF                   		sel	rb0
+  78:../src/r_cg_intc_user.c ****     /* Start user code. Do not edit comment generated here */
+  79:../src/r_cg_intc_user.c **** 	desplazar --;
+ 126                             		.loc 1 79 0
+ 127 0053 8F 00 00                		mov	a, !_desplazar
+ 128 0056 9D F0                   		mov	r8, a
+ 129 0058 B4 F0                   		dec	r8
+ 130 005a 8D F0                   		mov	a, r8
+ 131 005c 9F 00 00                		mov	!_desplazar, a
+  80:../src/r_cg_intc_user.c **** 	if(desplazar > 0){
+ 132                             		.loc 1 80 0
+ 133 005f 9D F0                   		mov	r8, a
+ 134 0061 D1                      		cmp0	a
+ 135 0062 71 FF                   		 xor1	CY, a.7
+ 136 0064 61 E3                   		 skh
+ 137 0066 EC 7A 00 00             		 br	!!.L5
+  81:../src/r_cg_intc_user.c **** 		mov_canon>>=1;
+ 138                             		.loc 1 81 0
+ 139 006a 8F 00 00                		mov	a, !_mov_canon
+ 140 006d 9D F0                   		mov	r8, a
+ 141 006f 31 1A                   		shr	a, 1
+ 142 0071 9D F0                   		mov	r8, a
+ 143 0073 9F 00 00                		mov	!_mov_canon, a
+ 144 0076 EC 80 00 00             		br	!!.L4
+ 145                             	.L5:
+  82:../src/r_cg_intc_user.c **** 	}else{
+  83:../src/r_cg_intc_user.c **** 		desplazar=0;
+ 146                             		.loc 1 83 0
+ 147 007a F5 00 00                		clrb	!_desplazar
+  84:../src/r_cg_intc_user.c **** 		mov_canon=0b00001;
+ 148                             		.loc 1 84 0
+ 149 007d E5 00 00                		oneb	!_mov_canon
+ 150                             	.L4:
+  85:../src/r_cg_intc_user.c **** 	}
+  86:../src/r_cg_intc_user.c ****     /* End user code. Do not edit comment generated here */
+  87:../src/r_cg_intc_user.c **** }
+ 151                             		.loc 1 87 0
+ 152 0080 61 DF                   		sel	rb1
+ 153 0082 C0                      		pop	ax ; r8
+ 154 0083 61 CF                   		sel	rb0
+ 155 0085 C6                      		pop	hl
+ 156 0086 C4                      		pop	de
+ 157 0087 C2                      		pop	bc
+ 158 0088 C0                      		pop	ax
+ 159 0089 61 FC                   		reti
+ 160                             	.LFE1:
+ 162                             		.global	_r_intc10_interrupt
+ 164                             	_r_intc10_interrupt:
+ 165                             	.LFB2:
+  88:../src/r_cg_intc_user.c **** 
+  89:../src/r_cg_intc_user.c **** /**************************************************************************************************
+  90:../src/r_cg_intc_user.c **** * Function Name: r_intc10_interrupt
+  91:../src/r_cg_intc_user.c **** * Description  : This function is INTP10 interrupt service routine.
+  92:../src/r_cg_intc_user.c **** * Arguments    : None
+  93:../src/r_cg_intc_user.c **** * Return Value : None
+  94:../src/r_cg_intc_user.c **** ***************************************************************************************************
+  95:../src/r_cg_intc_user.c **** void r_intc10_interrupt(void)
+  96:../src/r_cg_intc_user.c **** {
+ 166                             		.loc 1 96 0
+ 167                             		; start of function
+ 168                             		; push 16: ax bc de hl r8 r10 r12 r14
+ 169 008b 61 CF                   		sel	rb0
+ 170 008d C1                      		push	ax
+ 171                             	.LCFI10:
+ 172 008e C3                      		push	bc
+ 173                             	.LCFI11:
+ 174 008f C5                      		push	de
+ 175                             	.LCFI12:
+ 176 0090 C7                      		push	hl
+ 177                             	.LCFI13:
+ 178 0091 61 DF                   		sel	rb1
+ 179 0093 C1                      		push	ax ; r8
+ 180                             	.LCFI14:
+ 181 0094 C3                      		push	bc ; r10
+ 182                             	.LCFI15:
+ 183 0095 C5                      		push	de ; r12
+ 184                             	.LCFI16:
+ 185 0096 C7                      		push	hl ; r14
+ 186                             	.LCFI17:
+ 187 0097 61 CF                   		sel	rb0
+  97:../src/r_cg_intc_user.c ****     /* Start user code. Do not edit comment generated here */
+  98:../src/r_cg_intc_user.c **** 	if(EGN1_bit.no2==1)//EGN10 flanco de bajada
+ 188                             		.loc 1 98 0
+ 189 0099 C9 F0 3B FF             		movw	r8, #-197
+ 190 009d AD F0                   		movw	ax, r8
+ 191 009f BD F2                   		movw	r10, ax
+ 192 00a1 FA F2                   		movw	hl, r10
+ 193 00a3 8B                      		mov	a, [hl]
+ 194 00a4 9D F0                   		mov	r8, a
+ 195 00a6 31 2A                   		shr	a, 2
+ 196 00a8 9D F0                   		mov	r8, a
+ 197 00aa 5A F0 01                		and	r8, #1
+ 198 00ad 4A F0 01                		cmp	r8, #1
+ 199 00b0 61 E8                   		 skz
+ 200 00b2 EC F0 00 00             		 br	!!.L8
+ 201                             	.LBB2:
+  99:../src/r_cg_intc_user.c **** 	{
+ 100:../src/r_cg_intc_user.c **** 	R_TAU0_Channel2_Start();
+ 202                             		.loc 1 100 0
+ 203 00b6 FC 00 00 00             		call	!!%code(_R_TAU0_Channel2_Start)
+ 101:../src/r_cg_intc_user.c **** 	EGN1_bit.no2=0;
+ 204                             		.loc 1 101 0
+ 205 00ba C9 F0 3B FF             		movw	r8, #-197
+ 206 00be AD F0                   		movw	ax, r8
+ 207 00c0 BD F4                   		movw	r12, ax
+ 208 00c2 FA F4                   		movw	hl, r12
+ 209 00c4 8B                      		mov	a, [hl]
+ 210 00c5 9D F2                   		mov	r10, a
+ 211 00c7 5A F2 FB                		and	r10, #-5
+ 212 00ca AD F0                   		movw	ax, r8
+ 213 00cc DA F4                   		movw	bc, r12
+ 214 00ce 8D F2                   		mov	a, r10
+ 215 00d0 48 00 00                		mov	[bc], a
+ 102:../src/r_cg_intc_user.c **** 	EGP1_bit.no2=1;  //flanco de subida
+ 216                             		.loc 1 102 0
+ 217 00d3 C9 F0 3A FF             		movw	r8, #-198
+ 218 00d7 AD F0                   		movw	ax, r8
+ 219 00d9 BD F4                   		movw	r12, ax
+ 220 00db FA F4                   		movw	hl, r12
+ 221 00dd 8B                      		mov	a, [hl]
+ 222 00de 9D F2                   		mov	r10, a
+ 223 00e0 6A F2 04                		or	r10, #4
+ 224 00e3 AD F0                   		movw	ax, r8
+ 225 00e5 DA F4                   		movw	bc, r12
+ 226 00e7 8D F2                   		mov	a, r10
+ 227 00e9 48 00 00                		mov	[bc], a
+ 228                             	.LBE2:
+ 229 00ec EC 26 01 00             		br	!!.L9
+ 230                             	.L8:
+ 231                             	.LBB3:
+ 103:../src/r_cg_intc_user.c **** 	}
+ 104:../src/r_cg_intc_user.c **** 	else
+ 105:../src/r_cg_intc_user.c **** 	{
+ 106:../src/r_cg_intc_user.c **** 	R_TAU0_Channel2_Stop();
+ 232                             		.loc 1 106 0
+ 233 00f0 FC 00 00 00             		call	!!%code(_R_TAU0_Channel2_Stop)
+ 107:../src/r_cg_intc_user.c **** 	EGN1_bit.no2=1;
+ 234                             		.loc 1 107 0
+ 235 00f4 C9 F0 3B FF             		movw	r8, #-197
+ 236 00f8 AD F0                   		movw	ax, r8
+ 237 00fa BD F4                   		movw	r12, ax
+ 238 00fc FA F4                   		movw	hl, r12
+ 239 00fe 8B                      		mov	a, [hl]
+ 240 00ff 9D F2                   		mov	r10, a
+ 241 0101 6A F2 04                		or	r10, #4
+ 242 0104 AD F0                   		movw	ax, r8
+ 243 0106 DA F4                   		movw	bc, r12
+ 244 0108 8D F2                   		mov	a, r10
+ 245 010a 48 00 00                		mov	[bc], a
+ 108:../src/r_cg_intc_user.c **** 	EGP1_bit.no2=0;
+ 246                             		.loc 1 108 0
+ 247 010d C9 F0 3A FF             		movw	r8, #-198
+ 248 0111 AD F0                   		movw	ax, r8
+ 249 0113 BD F4                   		movw	r12, ax
+ 250 0115 FA F4                   		movw	hl, r12
+ 251 0117 8B                      		mov	a, [hl]
+ 252 0118 9D F2                   		mov	r10, a
+ 253 011a 5A F2 FB                		and	r10, #-5
+ 254 011d AD F0                   		movw	ax, r8
+ 255 011f DA F4                   		movw	bc, r12
+ 256 0121 8D F2                   		mov	a, r10
+ 257 0123 48 00 00                		mov	[bc], a
+ 258                             	.L9:
+ 259                             	.LBE3:
+ 109:../src/r_cg_intc_user.c **** 	}
+ 110:../src/r_cg_intc_user.c **** 	// Variable que marca el comienzo del juego
+ 111:../src/r_cg_intc_user.c **** 	start=1;
+ 260                             		.loc 1 111 0
+ 261 0126 E5 00 00                		oneb	!_start
+ 112:../src/r_cg_intc_user.c **** 	// Mecanismo de disparo
+ 113:../src/r_cg_intc_user.c **** 	disparo++;
+ 262                             		.loc 1 113 0
+ 263 0129 8F 00 00                		mov	a, !_disparo
+ 264 012c 9D F0                   		mov	r8, a
+ 265 012e A4 F0                   		inc	r8
+ 266 0130 8D F0                   		mov	a, r8
+ 267 0132 9F 00 00                		mov	!_disparo, a
+ 114:../src/r_cg_intc_user.c **** 	if(desplazar==4)
+ 268                             		.loc 1 114 0
+ 269 0135 8F 00 00                		mov	a, !_desplazar
+ 270 0138 9D F0                   		mov	r8, a
+ 271 013a 4A F0 04                		cmp	r8, #4
+ 272 013d 61 E8                   		 skz
+ 273 013f EC 48 01 00             		 br	!!.L10
+ 115:../src/r_cg_intc_user.c **** 		copia_canon=16;
+ 274                             		.loc 1 115 0
+ 275 0143 51 10                   		mov	a, #16
+ 276 0145 9F 00 00                		mov	!_copia_canon, a
+ 277                             	.L10:
+ 116:../src/r_cg_intc_user.c **** 	if(desplazar==3)
+ 278                             		.loc 1 116 0
+ 279 0148 8F 00 00                		mov	a, !_desplazar
+ 280 014b 9D F0                   		mov	r8, a
+ 281 014d 4A F0 03                		cmp	r8, #3
+ 282 0150 61 E8                   		 skz
+ 283 0152 EC 5B 01 00             		 br	!!.L11
+ 117:../src/r_cg_intc_user.c **** 		copia_canon=8;
+ 284                             		.loc 1 117 0
+ 285 0156 51 08                   		mov	a, #8
+ 286 0158 9F 00 00                		mov	!_copia_canon, a
+ 287                             	.L11:
+ 118:../src/r_cg_intc_user.c **** 	if(desplazar==2)
+ 288                             		.loc 1 118 0
+ 289 015b 8F 00 00                		mov	a, !_desplazar
+ 290 015e 9D F0                   		mov	r8, a
+ 291 0160 4A F0 02                		cmp	r8, #2
+ 292 0163 61 E8                   		 skz
+ 293 0165 EC 6E 01 00             		 br	!!.L12
+ 119:../src/r_cg_intc_user.c **** 		copia_canon=4;
+ 294                             		.loc 1 119 0
+ 295 0169 51 04                   		mov	a, #4
+ 296 016b 9F 00 00                		mov	!_copia_canon, a
+ 297                             	.L12:
+ 120:../src/r_cg_intc_user.c **** 	if(desplazar==1)
+ 298                             		.loc 1 120 0
+ 299 016e 8F 00 00                		mov	a, !_desplazar
+ 300 0171 9D F0                   		mov	r8, a
+ 301 0173 4A F0 01                		cmp	r8, #1
+ 302 0176 61 E8                   		 skz
+ 303 0178 EC 81 01 00             		 br	!!.L13
+ 121:../src/r_cg_intc_user.c **** 		copia_canon=2;
+ 304                             		.loc 1 121 0
+ 305 017c 51 02                   		mov	a, #2
+ 306 017e 9F 00 00                		mov	!_copia_canon, a
+ 307                             	.L13:
+ 122:../src/r_cg_intc_user.c **** 	if(desplazar==0)
+ 308                             		.loc 1 122 0
+ 309 0181 8F 00 00                		mov	a, !_desplazar
+ 310 0184 9D F0                   		mov	r8, a
+ 311 0186 D4 F0                   		cmp0	r8
+ 312 0188 61 E8                   		 skz
+ 313 018a EC 91 01 00             		 br	!!.L7
+ 123:../src/r_cg_intc_user.c **** 		copia_canon=1;
+ 314                             		.loc 1 123 0
+ 315 018e E5 00 00                		oneb	!_copia_canon
+ 316                             	.L7:
+ 124:../src/r_cg_intc_user.c ****     /* End user code. Do not edit comment generated here */
+ 125:../src/r_cg_intc_user.c **** }
+ 317                             		.loc 1 125 0
+ 318 0191 61 DF                   		sel	rb1
+ 319 0193 C6                      		pop	hl ; r14
+ 320 0194 C4                      		pop	de ; r12
+ 321 0195 C2                      		pop	bc ; r10
+ 322 0196 C0                      		pop	ax ; r8
+ 323 0197 61 CF                   		sel	rb0
+ 324 0199 C6                      		pop	hl
+ 325 019a C4                      		pop	de
+ 326 019b C2                      		pop	bc
+ 327 019c C0                      		pop	ax
+ 328 019d 61 FC                   		reti
+ 329                             	.LFE2:
+ 445                             	.Letext0:
+ 446                             		.file 2 "../src/iodefine.h"

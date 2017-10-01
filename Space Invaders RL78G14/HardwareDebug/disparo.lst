@@ -1,0 +1,51 @@
+   1                             	r8	=	0xffef0
+   2                             	r16	=	0xffee8
+   3                             	r24	=	0xffee0
+   4                             	r9	=	0xffef1
+   5                             	r17	=	0xffee9
+   6                             	r25	=	0xffee1
+   7                             	r10	=	0xffef2
+   8                             	r18	=	0xffeea
+   9                             	r26	=	0xffee2
+  10                             	r11	=	0xffef3
+  11                             	r19	=	0xffeeb
+  12                             	r27	=	0xffee3
+  13                             	r12	=	0xffef4
+  14                             	r20	=	0xffeec
+  15                             	r28	=	0xffee4
+  16                             	r13	=	0xffef5
+  17                             	r21	=	0xffeed
+  18                             	r29	=	0xffee5
+  19                             	r14	=	0xffef6
+  20                             	r22	=	0xffeee
+  21                             	r30	=	0xffee6
+  22                             	r15	=	0xffef7
+  23                             	r23	=	0xffeef
+  24                             	r31	=	0xffee7
+  25                             	.text
+  26                             	.Ltext0:
+  27                             		.global	_disparo
+  29                             	_disparo:
+  30                             	.LFB0:
+  31                             		.file 1 "../src/disparo.c"
+   1:../src/disparo.c **** /*
+   2:../src/disparo.c ****  * disparo.c
+   3:../src/disparo.c ****  *
+   4:../src/disparo.c ****  *  Created on: 2/5/2017
+   5:../src/disparo.c ****  *      Author: Ivan
+   6:../src/disparo.c ****  */
+   7:../src/disparo.c **** 
+   8:../src/disparo.c **** 
+   9:../src/disparo.c **** void disparo(void){
+  32                             		.loc 1 9 0
+  10:../src/disparo.c **** 
+  11:../src/disparo.c **** 
+  12:../src/disparo.c **** 
+  13:../src/disparo.c **** 
+  14:../src/disparo.c **** 
+  15:../src/disparo.c **** 
+  16:../src/disparo.c **** }
+  33                             		.loc 1 16 0
+  34 0000 D7                      		ret
+  35                             	.LFE0:
+  63                             	.Letext0:
