@@ -1,12 +1,10 @@
 # RL78-G14: Space Invaders 
-## Index
 
-	1. Descripción
-	2. Referencias
+- [Introducción](#introducción)
+- [Enlaces de interés](#enlaces-de-interés)
 
-## Contenido
 
-	1. Descripción
+## Introducción
 
 Clásico juego de arcade Space Invaders, programado en C, para la placa de desarrollo RL78/G14 de Renesas.
 
@@ -15,6 +13,6 @@ Clásico juego de arcade Space Invaders, programado en C, para la placa de desar
 
 Figura 1. RL78/G14
 
-	2. Referencias
+## Enlaces de interés
 
-***Proximamente...***
+Proximamente...
