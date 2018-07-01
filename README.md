@@ -1,4 +1,5 @@
-# RL78-G14: Space Invaders 
+# Space Invaders: RL78-G14 
+[![Build Status](https://travis-ci.org/davidvelascogarcia/Space-Invaders-RL78-G14.svg?branch=master)](https://travis-ci.org/davidvelascogarcia/Space-Invaders-RL78-G14)
 
 - [Introducción](#introducción)
 - [Enlaces de interés](#enlaces-de-interés)
